@@ -1,0 +1,62 @@
+@import "tailwindcss";
+
+:root {
+  --ash: #16110c;
+  --ember: #3a1c14;
+  --steel: #142033;
+  --horde: #b43c2a;
+  --horde-dim: #7a281c;
+  --alliance: #3a6cad;
+  --alliance-dim: #1e3d6b;
+  --ink: #ede4d4;
+  --muted: #a89880;
+  --line: rgba(237, 228, 212, 0.14);
+  --gold: #c9a44c;
+}
+
+@theme inline {
+  --color-ash: var(--ash);
+  --color-ember: var(--ember);
+  --color-steel: var(--steel);
+  --color-horde: var(--horde);
+  --color-alliance: var(--alliance);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-gold: var(--gold);
+  --font-display: var(--font-display);
+  --font-body: var(--font-body);
+  --font-mono: var(--font-mono);
+}
+
+html,
+body {
+  min-height: 100%;
+  background: var(--ash);
+  color: var(--ink);
+}
+
+body {
+  font-family: var(--font-body), serif;
+  background-image:
+    radial-gradient(1200px 700px at 0% 0%, var(--ember) 0%, transparent 55%),
+    radial-gradient(1100px 800px at 100% 0%, var(--steel) 0%, transparent 50%),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.55));
+}
+
+body::before {
+  content: "";
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  opacity: 0.09;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");
+}
+
+a {
+  color: var(--gold);
+  text-underline-offset: 3px;
+}
+
+a:hover {
+  color: var(--ink);
+}
