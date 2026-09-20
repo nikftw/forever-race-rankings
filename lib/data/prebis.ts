@@ -3,7 +3,7 @@ import type { Role } from "@/lib/types";
 export type KitItem = {
   slot: string;
   name: string;
-  source: "classic-filler" | "visible-forever";
+  source: "classic-filler" | "visible-forever" | "wowsims";
   note?: string;
 };
 

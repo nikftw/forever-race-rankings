@@ -40,3 +40,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# local custom talent trees / gear written by the UI
+/lib/data/talent-overrides.json
+/lib/data/gear-overrides/

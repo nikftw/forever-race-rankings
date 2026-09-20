@@ -85,7 +85,7 @@ export const SPECS: SpecDef[] = [
   spec({
     id: "paladin-ret",
     wowClass: "paladin",
-    name: "Retribution",
+    name: "RET",
     role: "dps",
     treeSplit: "15/0/36",
     talentUrl: `${TF}/paladin/60/255003--052253310012330321-3`,
@@ -136,7 +136,7 @@ export const SPECS: SpecDef[] = [
   spec({
     id: "hunter-survival",
     wowClass: "hunter",
-    name: "Survival",
+    name: "SURV",
     role: "dps",
     treeSplit: "5/11/35",
     talentUrl: `${TF}/hunter/60/5-005005001-500230230250222151-3`,
@@ -153,7 +153,7 @@ export const SPECS: SpecDef[] = [
   spec({
     id: "hunter-mm",
     wowClass: "hunter",
-    name: "Marksmanship",
+    name: "MM",
     role: "dps",
     treeSplit: "5/41/5",
     talentUrl: `${TF}/hunter/60/5-3053552011523051-5-3`,
@@ -170,7 +170,7 @@ export const SPECS: SpecDef[] = [
   spec({
     id: "hunter-bm",
     wowClass: "hunter",
-    name: "Beast Mastery",
+    name: "BM",
     role: "dps",
     treeSplit: "31/20/0",
     talentUrl: `${TF}/hunter/60/5120021505101251-00503520005--3`,
@@ -204,7 +204,7 @@ export const SPECS: SpecDef[] = [
   spec({
     id: "rogue-assassination",
     wowClass: "rogue",
-    name: "Assassination",
+    name: "ASSA",
     role: "dps",
     treeSplit: "38/11/2",
     talentUrl: `${TF}/rogue/60/00531310551521051-302303-002-3`,
@@ -290,7 +290,7 @@ export const SPECS: SpecDef[] = [
   spec({
     id: "shaman-enhance",
     wowClass: "shaman",
-    name: "Enhancement",
+    name: "ENH",
     role: "dps",
     treeSplit: "17/34/0",
     talentUrl: `${TF}/shaman/60/05003305001-055030031005112251--3`,
@@ -307,7 +307,7 @@ export const SPECS: SpecDef[] = [
   spec({
     id: "shaman-ele",
     wowClass: "shaman",
-    name: "Elemental",
+    name: "ELE",
     role: "dps",
     treeSplit: "38/13/0",
     talentUrl: `${TF}/shaman/60/5505301503123131-055002001--3`,
@@ -392,7 +392,7 @@ export const SPECS: SpecDef[] = [
   spec({
     id: "warlock-affliction",
     wowClass: "warlock",
-    name: "Affliction",
+    name: "AFFLI",
     role: "dps",
     treeSplit: "40/11/0",
     talentUrl: `${TF}/warlock/60/05550320035201351-0050203001--BCDFGJKLNOPTVXaQ-3`,
@@ -409,7 +409,7 @@ export const SPECS: SpecDef[] = [
   spec({
     id: "warlock-demo",
     wowClass: "warlock",
-    name: "Demonology",
+    name: "DEMO",
     role: "dps",
     treeSplit: "5/33/13",
     talentUrl: `${TF}/warlock/60/005-0050233201211031351-20550001-3`,
@@ -426,7 +426,7 @@ export const SPECS: SpecDef[] = [
   spec({
     id: "warlock-destro",
     wowClass: "warlock",
-    name: "Destruction",
+    name: "DEST",
     role: "dps",
     treeSplit: "5/11/35",
     talentUrl: `${TF}/warlock/60/05-0050203001-2050355103101351-3`,

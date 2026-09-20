@@ -229,14 +229,12 @@ export const RACIAL_AUDIT: RacialAuditRow[] = [
       wowsims: "Absent.",
     },
     chosen:
-      "Beta client: 5% caster / 10% melee chance, 1s ICD, drain up to 5% max HP. Per-hit coefficient unknown — combat sim uses a small placeholder, not the cap as typical.",
-    disputed: true,
-    disputeNote:
-      "Proc rates locked from the beta export. Drain formula is still unknown; ElliotWood rolls 2.5–5% max HP with no ICD, which would dominate. We keep the 5/10 split and 1s ICD and do not treat the cap as average damage.",
+      "Your spells and attacks drain Health from the target, up to 5% of your maximum Health. 10% chance melee / 5% chance caster, 1s ICD. Drain is the caster's HP, not the dummy's.",
+    disputed: false,
     wowsims: "aligned",
     wowsimsNote:
-      "ElliotWood: 5% caster / 10% melee, 1s ICD, placeholder coeff 36 capped at 5% max HP.",
-    simUses: "touchOfTheGrave 5/10/5%/1s",
+      "ElliotWood: 5% caster / 10% melee, 1s ICD, drain 5% of the Undead's max HP.",
+    simUses: "touchOfTheGrave 5/10 / 5% of your HP / 1s ICD",
     effect: {
       kind: "touchOfTheGrave",
       casterChance: 0.05,
@@ -960,13 +958,13 @@ export const RACIAL_AUDIT: RacialAuditRow[] = [
       wowsims: "Classic Starshards if priest racials exist; not verified here.",
     },
     chosen:
-      "Channeled rank-4 tooltip only (level 38): 816 Arcane over 6 sec / 30 sec CD on Night Elf Shadow. Rank 60 not in the beta export — not extrapolated.",
-    disputed: true,
-    disputeNote: "Level 38 demo tooltip only. Do not invent a 60 rank.",
+      "Rank 7 (level 58): 350 mana, 6s channel, 30s CD, 30 yd. Rains starshards on the target for (100.2% of Spell Power) Arcane over 6 sec. Night Elf Priest only.",
+    disputed: false,
     wowsims: "aligned",
-    wowsimsNote: "Placeholder extraDps 40 until a rank-60 tooltip exists.",
-    simUses: "starshards extraDps 40 on Night Elf Priest specs",
-    effect: { kind: "starshards", extraDps: 40 },
+    wowsimsNote:
+      "ElliotWood: Night Elf Priest channel, 0.167 coeff per tick (100.2% SP), 30s CD. Rank-7 1800 base from the 69893 client dump.",
+    simUses: "Starshards rank 7: 100.2% SP / 6s channel / 30s CD",
+    effect: { kind: "starshards", extraDps: 0 },
   }),
   row({
     id: "blood-elf-trap",

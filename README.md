@@ -22,7 +22,7 @@ npm run lint
 
 ## Re-sim
 
-Each combo is **300 iterations** of a 180s Demon Patchwerk fight. The **Refresh all sims** button (local `next dev` / `next start` only) runs every combo again with a **new seed**. GitHub Pages is a static snapshot of the last committed JSON.
+Each combo uses the **Iters** control (default 1000) on a 180s Patchwerk fight (default Demon dummy). The **Dummy** control re-sims against Beast, Elemental, and the other creature types so Beast Slaying / BGH / Elemental Insight can score. **Refresh all sims** (local `next dev` / `next start` only) runs every combo again with a **new seed** and streams combo-by-combo progress. GitHub Pages is a static snapshot of the last committed JSON.
 
 Needs [Go](https://go.dev/dl/) and a clone of ElliotWood/Forever at `../wowsims-forever`.
 
@@ -34,8 +34,8 @@ Writes `lib/data/sim-results.json`. Omit `-seed` for a fresh seed, or pass `-see
 
 ## What it sims
 
-- 300 iterations per class/race/spec, 180s generic Patchwerk (Demon dummy so Beast Slaying / BGH / Elemental Insight stay off)
-- ElliotWood class APLs + the same pre-raid gear preset for every race of a spec
+- 20–3000 iterations per class/race/spec (set **Iters** on the board), 180s generic Patchwerk (pick dummy type in the UI; Demon leaves Beast Slaying / BGH / Elemental Insight off)
+- ElliotWood class APLs + Era pre-raid kits in `lib/data/era-prebis` (dungeon / crafted / world-boss; no raid or ranked PvP)
 - Axe / sword / mace races are swapped onto that weapon type
 - Talents from [talentsforever.com](https://talentsforever.com) `/60/` strings when the fork accepts them
 - Forever racials from `lib/data/racial-audit.ts`

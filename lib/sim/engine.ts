@@ -1,4 +1,4 @@
-import { kitForSpec, type PrebisKit } from "@/lib/data/prebis";
+import { kitForSpec, type KitItem, type PrebisKit } from "@/lib/data/prebis";
 import type { SpecDef } from "@/lib/data/specs";
 import type { RaceId, WeaponFamily } from "@/lib/types";
 import simResults from "@/lib/data/sim-results.json";
@@ -23,7 +23,13 @@ export type SimResult = {
   missing: boolean;
 };
 
-type StoredRow = {
+type StoredGearPiece = {
+  slot: string;
+  name: string;
+  id?: number;
+};
+
+export type StoredRow = {
   specId: string;
   raceId: string;
   dps: number;
@@ -34,6 +40,8 @@ type StoredRow = {
   talents: string;
   talentSource: string;
   weapon?: string;
+  gearSet?: string;
+  gear?: StoredGearPiece[];
   error?: string;
 };
 
@@ -63,6 +71,15 @@ rebuildIndex();
 
 export function replaceSimResults(next: StoredResults): void {
   stored = next;
+  rebuildIndex();
+}
+
+export function upsertSimRow(row: StoredRow): void {
+  const rows = stored.rows.filter(
+    (entry) => !(entry.specId === row.specId && entry.raceId === row.raceId),
+  );
+  rows.push(row);
+  stored = { ...stored, rows };
   rebuildIndex();
 }
 
@@ -118,9 +135,26 @@ function throughput(row: StoredRow, roleHeal: boolean): number {
   return row.dps;
 }
 
+function kitForRow(spec: SpecDef, row: StoredRow | undefined): PrebisKit {
+  const base = kitForSpec(spec.id, spec.role);
+  if (!row?.gear?.length) {
+    return base;
+  }
+  const items: KitItem[] = row.gear.map((piece) => ({
+    slot: piece.slot,
+    name: piece.name,
+    source: "wowsims",
+  }));
+  return {
+    ...base,
+    label: row.gearSet ? `ElliotWood ${row.gearSet}` : base.label,
+    items,
+  };
+}
+
 export function simulateCombo(spec: SpecDef, raceId: RaceId): SimResult {
-  const kit = kitForSpec(spec.id, spec.role);
   const row = rowIndex.get(`${spec.id}:${raceId}`);
+  const kit = kitForRow(spec, row);
   const weapon = storedWeapon(row?.weapon) ?? preferredWeapon(spec, raceId);
   if (!row || row.error) {
     return {
@@ -175,4 +209,13 @@ export function simulateCombo(spec: SpecDef, raceId: RaceId): SimResult {
 export function hasSimRow(specId: string, raceId: RaceId): boolean {
   const row = rowIndex.get(`${specId}:${raceId}`);
   return Boolean(row && !row.error);
+}
+
+export function storedTalentsForSpec(specId: string): string | null {
+  for (const row of stored.rows) {
+    if (row.specId === specId && row.talents) {
+      return row.talents;
+    }
+  }
+  return null;
 }

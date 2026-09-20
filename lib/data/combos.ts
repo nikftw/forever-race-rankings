@@ -1,5 +1,6 @@
 import { RACES } from "@/lib/data/races";
-import { assertNever, type RaceId, type WowClass } from "@/lib/types";
+import { SPECS } from "@/lib/data/specs";
+import { assertNever, type RaceId, type SpecId, type WowClass } from "@/lib/types";
 
 const CLASS_RACES: Record<WowClass, RaceId[]> = {
   warrior: [
@@ -43,17 +44,64 @@ const CLASS_RACES: Record<WowClass, RaceId[]> = {
   druid: ["tauren", "windshaper", "nightelf", "highorder"],
 };
 
-export const WOW_CLASSES: WowClass[] = [
-  "warrior",
-  "paladin",
-  "hunter",
-  "rogue",
-  "shaman",
-  "druid",
-  "mage",
-  "warlock",
-  "priest",
+export const BOARD_ROWS: SpecId[][] = [
+  ["warrior-fury", "warrior-arms"],
+  ["rogue-combat", "rogue-assassination"],
+  ["shaman-enhance", "druid-feral", "paladin-ret"],
+  ["hunter-survival", "hunter-mm", "hunter-bm"],
+  ["shaman-ele", "druid-balance", "priest-shadow"],
+  ["mage-fire", "mage-frostfire", "mage-arcane"],
+  ["warlock-affliction", "warlock-demo", "warlock-destro"],
+  ["warrior-prot", "paladin-prot"],
+  ["druid-bear"],
 ];
+
+export const WOW_CLASSES: WowClass[] = flattenWowClasses();
+
+assertBoardRows(BOARD_ROWS);
+
+function flattenWowClasses(): WowClass[] {
+  const leftover: Record<WowClass, boolean> = {
+    warrior: true,
+    paladin: true,
+    hunter: true,
+    rogue: true,
+    shaman: true,
+    priest: true,
+    mage: true,
+    warlock: true,
+    druid: true,
+  };
+  const flat: WowClass[] = [];
+  for (const wowClass of Object.keys(leftover) as WowClass[]) {
+    leftover[wowClass] = false;
+    flat.push(wowClass);
+  }
+  return flat;
+}
+
+function assertBoardRows(rows: SpecId[][]): void {
+  const leftover = new Map<string, boolean>();
+  for (const spec of SPECS) {
+    if (spec.needsOverride) {
+      continue;
+    }
+    leftover.set(spec.id, true);
+  }
+  for (const row of rows) {
+    for (const specId of row) {
+      if (!leftover.get(specId)) {
+        throw new Error(`duplicate or unknown board spec ${specId}`);
+      }
+      leftover.set(specId, false);
+    }
+  }
+  for (const [specId, pending] of leftover) {
+    if (pending) {
+      throw new Error(`board rows missing ${specId}`);
+    }
+  }
+}
 
 export function classLabel(wowClass: WowClass): string {
   switch (wowClass) {

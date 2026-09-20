@@ -45,12 +45,20 @@ describe("forever racial engine", () => {
     assert.equal(torrent?.wowsims, "misaligned");
   });
 
-  it("locks settled racials and only flags ToG coeff and Starshards rank 60", () => {
+  it("locks scored racials including ToG and Starshards", () => {
     const scoredDisputed = scoredAuditRows()
       .filter((row) => row.disputed)
       .map((row) => row.id)
       .sort();
-    assert.deepEqual(scoredDisputed, ["priest-starshards", "undead-grave"]);
+    assert.deepEqual(scoredDisputed, []);
+    assert.equal(
+      RACIAL_AUDIT.find((row) => row.id === "undead-grave")?.disputed,
+      false,
+    );
+    assert.equal(
+      RACIAL_AUDIT.find((row) => row.id === "priest-starshards")?.disputed,
+      false,
+    );
     assert.equal(
       RACIAL_AUDIT.find((row) => row.id === "orc-blood-fury")?.disputed,
       false,
@@ -197,7 +205,7 @@ describe("forever racial engine", () => {
     const meta = simMeta();
     assert.equal(meta.engine, "ElliotWood/Forever");
     assert.equal(meta.fightDurationSec, 180);
-    assert.equal(meta.iterations, 300);
+    assert.equal(meta.iterations, 1000);
     assert.equal(meta.mobType, "Demon");
     const missing: string[] = [];
     for (const wowClass of WOW_CLASSES) {
@@ -216,6 +224,42 @@ describe("forever racial engine", () => {
     for (const row of scoredAuditRows()) {
       if (!row.disputed) {
         assert.equal(row.wowsims, "aligned", row.id);
+      }
+    }
+  });
+
+  it("lists equipped wowsims slots instead of a 3-item filler kit", () => {
+    const hunter = simulateCombo(specById("hunter-mm"), "orc");
+    const fury = simulateCombo(specById("warrior-fury"), "orc");
+    const feral = simulateCombo(specById("druid-feral"), "nightelf");
+    assert.ok(hunter.kit.items.length >= 16, String(hunter.kit.items.length));
+    assert.ok(fury.kit.items.length >= 16, String(fury.kit.items.length));
+    assert.equal(
+      hunter.kit.items.some((item) => item.slot === "Head"),
+      true,
+    );
+    assert.equal(
+      feral.kit.items.some(
+        (item) => item.name === "(empty)" && item.slot !== "Off Hand",
+      ),
+      false,
+    );
+  });
+
+  it("does not equip raid drops or ranked PvP sets", () => {
+    const banned =
+      /Field Marshal|Grand Marshal|Marshal's |Champion's |Lieutenant Commander|Knight-Captain|Legionnaire's |Warlord|Sulfuras|Bonereaver|Accuria|Bloodvine|Onyxia|Conqueror|Genesis |Robe of the Archmage|Robe of the Void|Titanic Leggings|Thick Obsidian|Mace of Unending Life|Hammer of Bestial Fury/;
+    const hunter = simulateCombo(specById("hunter-mm"), "orc");
+    const fury = simulateCombo(specById("warrior-fury"), "orc");
+    const feral = simulateCombo(specById("druid-feral"), "nightelf");
+    const enhance = simulateCombo(specById("shaman-enhance"), "orc");
+    for (const row of [hunter, fury, feral, enhance]) {
+      for (const item of row.kit.items) {
+        assert.equal(
+          banned.test(item.name),
+          false,
+          `${row.specId} ${item.slot} ${item.name}`,
+        );
       }
     }
   });
@@ -263,6 +307,8 @@ describeSibling("patched ElliotWood racials", () => {
     assert.match(src, /Duration:\s+time\.Second,/);
     assert.match(src, /Forever Blood Fury is off GCD/);
     assert.match(src, /AddMaxRage/);
+    assert.match(src, /MaxHealth\(\) \* 0\.05/);
+    assert.equal(src.includes("base := 36.0"), false);
   });
 });
 

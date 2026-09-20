@@ -27,12 +27,12 @@ Re-sim (Go + sibling clone at `../wowsims-forever`):
 npm run sim
 ```
 
-`npm run dev` displays the last `lib/data/sim-results.json`. Each combo is 300 iterations. The UI **Refresh all sims** button re-runs the ranker with a new seed (needs Go + `../wowsims-forever`).
+`npm run dev` displays the last `lib/data/sim-results.json`. Each combo is 1000 iterations. The UI **Refresh all sims** button re-runs the ranker with a new seed. The **Dummy** control re-sims against Beast / Elemental / etc so type-gated racials can score. GitHub Pages is a static snapshot of the last committed JSON (needs Go + `../wowsims-forever`).
 
 ## Conventions
 - Forever racials live in `lib/data/racial-audit.ts`. The ranker may only encode `effect` fields from that file into ElliotWood `racials.go`.
 - Talent builds live in `lib/data/specs.ts`. If a 51-point talentsforever build is missing, set `needsOverride: true` and leave `treeSplit` null. Do not invent trees.
-- Pre-raid kits in `lib/data/prebis.ts` are Classic dungeon/crafted stand-ins until Wowhead Forever lists stats.
+- Ranker gear comes from `lib/data/era-prebis` (Classic Era dungeon / crafted / world-boss). No raid drops or ranked PvP. The board lists those equipped items from `sim-results.json`.
 - Exhaustive switches over unions/enums must have a `never` default.
 
 ## Do not

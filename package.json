@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "test": "tsx --test lib/sim/engine.test.ts",
+    "test": "tsx --test lib/sim/engine.test.ts lib/sim/talents.test.ts lib/sim/mob-type.test.ts lib/sim/forever-link.test.ts",
     "sim": "node ./tools/run-sim.mjs",
     "pages:build": "node ./scripts/pages-build.mjs"
   },
