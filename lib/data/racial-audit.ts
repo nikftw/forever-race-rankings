@@ -710,6 +710,7 @@ export const RACIAL_AUDIT: RacialAuditRow[] = [
     disputed: false,
     wowsims: "aligned",
     wowsimsNote: "ElliotWood: +10% crit for 15s / 3 min.",
+    simUses: "critPercentWindow 10% / 15s / 180s",
     effect: {
       kind: "critPercentWindow",
       percent: 0.1,
