@@ -1,36 +1,36 @@
 import { SPECS } from "@/lib/data/specs";
 
-export const FOREVER_SIM_ORIGIN = "https://elliotwood.github.io/Forever/classic";
+export const FOREVER_SIM_ORIGIN = "https://elliotwood.github.io/Forever/forever";
 
 const SIM_UI_PATH: Record<string, string> = {
-  "warrior-fury": "warrior",
-  "warrior-arms": "warrior",
-  "warrior-prot": "tank_warrior",
-  "paladin-ret": "retribution_paladin",
-  "paladin-prot": "protection_paladin",
-  "paladin-holy": "holy_paladin",
-  "hunter-survival": "hunter",
-  "hunter-mm": "hunter",
-  "hunter-bm": "hunter",
-  "rogue-combat": "rogue",
-  "rogue-assassination": "rogue",
-  "rogue-subtlety": "rogue",
-  "priest-shadow": "shadow_priest",
-  "priest-disc": "healing_priest",
-  "priest-holy": "healing_priest",
-  "shaman-enhance": "enhancement_shaman",
-  "shaman-ele": "elemental_shaman",
-  "shaman-resto": "restoration_shaman",
-  "mage-fire": "mage",
-  "mage-frostfire": "mage",
-  "mage-arcane": "mage",
-  "warlock-affliction": "warlock",
-  "warlock-demo": "warlock",
-  "warlock-destro": "warlock",
-  "druid-feral": "feral_druid",
-  "druid-balance": "balance_druid",
-  "druid-resto": "restoration_druid",
-  "druid-bear": "feral_tank_druid",
+  "warrior-fury": "warrior/dps",
+  "warrior-arms": "warrior/dps",
+  "warrior-prot": "warrior/protection",
+  "paladin-ret": "paladin/retribution",
+  "paladin-prot": "paladin/protection",
+  "paladin-holy": "paladin/holy",
+  "hunter-survival": "hunter/dps",
+  "hunter-mm": "hunter/dps",
+  "hunter-bm": "hunter/dps",
+  "rogue-combat": "rogue/dps",
+  "rogue-assassination": "rogue/dps",
+  "rogue-subtlety": "rogue/dps",
+  "priest-shadow": "priest/dps",
+  "priest-disc": "priest/healer",
+  "priest-holy": "priest/healer",
+  "shaman-enhance": "shaman/enhancement",
+  "shaman-ele": "shaman/elemental",
+  "shaman-resto": "shaman/restoration",
+  "mage-fire": "mage/dps",
+  "mage-frostfire": "mage/dps",
+  "mage-arcane": "mage/dps",
+  "warlock-affliction": "warlock/dps",
+  "warlock-demo": "warlock/dps",
+  "warlock-destro": "warlock/dps",
+  "druid-feral": "druid/feralcat",
+  "druid-balance": "druid/balance",
+  "druid-resto": "druid/restoration",
+  "druid-bear": "druid/feralbear",
 };
 
 export type ParsedSimLink =
@@ -70,11 +70,11 @@ export function parsePastedSimLink(
   }
   const before = text.slice(0, hashAt).replace(/\/+$/, "");
   const hash = text.slice(hashAt + 1).replace(/\s+/g, "");
-  const pathMatch = before.match(/\/classic\/([a-z0-9_]+)$/i);
+  const pathMatch = before.match(/\/(?:classic|forever)\/([a-z0-9_]+\/[a-z0-9_]+)$/i);
   if (!pathMatch) {
     return {
       ok: false,
-      error: "Need a Forever classic/{class}/# link",
+      error: "Need a Forever /forever/{class}/{spec}/# link",
     };
   }
   const path = pathMatch[1].toLowerCase();

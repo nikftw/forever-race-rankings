@@ -284,7 +284,7 @@ const siblingRoot = join(process.cwd(), "..", "wowsims-forever");
 const hasSibling = existsSync(siblingRoot);
 const describeSibling = hasSibling ? describe : describe.skip;
 
-describeSibling.skip("patched ElliotWood racials", () => {
+describe.skip("patched ElliotWood racials", () => {
   const racialsPath = join(siblingRoot, "sim", "core", "racials.go");
 
   it("exists beside this repo", () => {
@@ -312,7 +312,7 @@ describeSibling.skip("patched ElliotWood racials", () => {
   });
 });
 
-describeSibling.skip("ranker weapon racials", () => {
+describe.skip("ranker weapon racials", () => {
   it("swaps racial weapons in the batch ranker", () => {
     const src = readFileSync(
       join(process.cwd(), "..", "wowsims-forever", "tools", "rank_races", "weapons.go"),

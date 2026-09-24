@@ -267,6 +267,27 @@ function PasteIcon() {
   );
 }
 
+function RefreshIcon() {
+  return (
+    <svg viewBox="0 0 16 16" fill="none" aria-hidden="true" className="h-3 w-3">
+      <path
+        d="M2.5 8a5.5 5.5 0 1 0 1.2-3.4L2 6.5"
+        stroke="currentColor"
+        strokeWidth="1.2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M2 3.5v3h3"
+        stroke="currentColor"
+        strokeWidth="1.2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
 function SpecColumn({
   ranking,
   faction,
@@ -284,6 +305,7 @@ function SpecColumn({
   onDraft,
   onCancel,
   onApply,
+  onResim,
 }: {
   ranking: SpecRanking;
   faction: Faction;
@@ -301,6 +323,7 @@ function SpecColumn({
   onDraft: (value: string) => void;
   onCancel: () => void;
   onApply: () => void;
+  onResim?: () => void;
 }) {
   const fill =
     faction === "horde" ? "bg-[var(--horde)]" : "bg-[var(--alliance)]";
@@ -362,6 +385,19 @@ function SpecColumn({
             >
               <PasteIcon />
             </IconButton>
+            {canResim && onResim ? (
+              <IconButton
+                label={
+                  applying
+                    ? `Re-simming ${ranking.spec.name}…`
+                    : `Re-sim ${ranking.spec.name}`
+                }
+                disabled={applying}
+                onClick={onResim}
+              >
+                <RefreshIcon />
+              </IconButton>
+            ) : null}
           </div>
         </div>
         {editing ? (
@@ -558,6 +594,7 @@ function FactionSpecs({
   setEditingId,
   setParseError,
   applyDraft,
+  onResimSpec,
 }: {
   ranked: ClassEntry[];
   faction: Faction;
@@ -577,6 +614,7 @@ function FactionSpecs({
   setEditingId: (value: string | null) => void;
   setParseError: (value: string | null) => void;
   applyDraft: (spec: SpecDef) => Promise<void>;
+  onResimSpec: (spec: SpecDef) => void;
 }) {
   return (
     <section aria-label={factionLabel(faction)}>
@@ -610,6 +648,7 @@ function FactionSpecs({
               setParseError(null);
             }}
             onApply={() => void applyDraft(entry.spec)}
+            onResim={() => onResimSpec(entry.spec)}
           />
         ))}
       </div>
@@ -892,6 +931,26 @@ export function RaceBoard() {
     }
   }
 
+  async function resimSpec(spec: SpecDef): Promise<void> {
+    if (!canResim) {
+      return;
+    }
+    setBusySpec(spec.id);
+    setError(null);
+    try {
+      const override = overrides[spec.id];
+      await postSim({
+        spec: spec.id,
+        talents: override?.talents,
+      });
+    } catch (cause) {
+      setError(cause instanceof Error ? cause.message : "Re-sim failed.");
+    } finally {
+      setBusySpec(null);
+      setProgress(null);
+    }
+  }
+
   return (
     <div>
       <div className="mb-4 flex flex-wrap items-end justify-between gap-3 border-b border-[var(--line)] pb-3">
@@ -1045,6 +1104,7 @@ export function RaceBoard() {
                   setEditingId={setEditingId}
                   setParseError={setParseError}
                   applyDraft={applyDraft}
+                  onResimSpec={(spec) => void resimSpec(spec)}
                 />
               ))}
             </div>
