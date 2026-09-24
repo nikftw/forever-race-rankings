@@ -752,6 +752,28 @@ export function RaceBoard() {
   }
 
 
+  async function refreshSims(): Promise<void> {
+    setBusy(true);
+    setError(null);
+    const rankedIds = BOARD_ROWS.flat();
+    try {
+      for (let i = 0; i < rankedIds.length; i++) {
+        const specId = rankedIds[i];
+        setProgress({
+          index: i + 1,
+          total: rankedIds.length,
+          label: `Simulating ${specId}… (${i + 1}/${rankedIds.length})`,
+        });
+        await postSim({ spec: specId });
+      }
+    } catch (cause) {
+      setError(cause instanceof Error ? cause.message : "Re-sim failed.");
+    } finally {
+      setBusy(false);
+      setProgress(null);
+    }
+  }
+
   async function changeMobType(next: string): Promise<void> {
     if (!isMobType(next) || next === dummy) {
       return;
@@ -969,6 +991,14 @@ export function RaceBoard() {
               ))}
             </select>
           </label>
+          <button
+            type="button"
+            onClick={() => void refreshSims()}
+            disabled={busy || busySpec !== null}
+            className="border border-[var(--gold)] px-2 py-1 font-[family-name:var(--font-display)] text-[11px] tracking-[0.12em] uppercase text-[var(--gold)] disabled:opacity-50"
+          >
+            {busy ? "Re-simming…" : "Refresh all sims"}
+          </button>
 
         </div>
       </div>
