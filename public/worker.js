@@ -6,7 +6,13 @@ self.wasmready = function () {
   postMessage({ type: "ready" });
 };
 
-WebAssembly.instantiateStreaming(fetch("sim.wasm?v=3"), go.importObject)
+const wasmFetch = fetch("sim.wasm?v=3");
+(WebAssembly.instantiateStreaming
+  ? WebAssembly.instantiateStreaming(wasmFetch, go.importObject).catch(() =>
+      wasmFetch.then((r) => r.arrayBuffer()).then((buf) => WebAssembly.instantiate(buf, go.importObject))
+    )
+  : wasmFetch.then((r) => r.arrayBuffer()).then((buf) => WebAssembly.instantiate(buf, go.importObject))
+)
   .then((result) => go.run(result.instance))
   .catch((err) => {
     console.error("Failed to load WASM:", err);
