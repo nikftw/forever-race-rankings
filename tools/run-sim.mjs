@@ -4,8 +4,13 @@ import { homedir } from "node:os";
 import { join, resolve } from "node:path";
 
 const home = homedir();
-const goBin = join(home, "sdk", "go", "bin", "go.exe");
-const go = existsSync(goBin) ? goBin : "go";
+const progGoBin = "C:\\Program Files\\Go\\bin\\go.exe";
+const goBin = existsSync(progGoBin)
+  ? progGoBin
+  : existsSync(join(home, "sdk", "go", "bin", "go.exe"))
+    ? join(home, "sdk", "go", "bin", "go.exe")
+    : "go";
+const go = goBin;
 const wowsims = resolve(process.cwd(), "..", "wowsims-forever");
 const out = resolve(process.cwd(), "lib", "data", "sim-results.json");
 
