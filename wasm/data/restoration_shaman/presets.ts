@@ -1,0 +1,39 @@
+import * as PresetUtils from '../core/preset_utils.js';
+import { Consumes, Flask, Food, WeaponImbue } from '../core/proto/common.js';
+import { RestorationShaman_Options as RestorationShamanOptions } from '../core/proto/shaman.js';
+import { SavedTalents } from '../core/proto/ui.js';
+import BlankGear from './gear_sets/blank.gear.json';
+
+// Preset options for this spec.
+// Eventually we will import these values for the raid sim too, so its good to
+// keep them in a separate file.
+
+export const DefaultGear = PresetUtils.makePresetGear('Blank', BlankGear);
+
+// Default talents. Uses the wowhead calculator format, make the talents on
+// https://wowhead.com/classic/talent-calc and copy the numbers in the url.
+export const TankHealingTalents = {
+	name: 'Tank Healing',
+	data: SavedTalents.create({
+		talentsString: '--5533523315513151',
+	}),
+};
+export const RaidHealingTalents = {
+	name: 'Raid Healing',
+	data: SavedTalents.create({
+		talentsString: '-005102-5530500315513151',
+	}),
+};
+
+export const TalentsRestoration = PresetUtils.makePresetTalents('Restoration 0/3/48', SavedTalents.create({ talentsString: '-003-5532503315513151' }));
+
+export const DefaultOptions = RestorationShamanOptions.create({
+	earthShieldPPM: 0,
+});
+
+export const DefaultConsumes = Consumes.create({
+	flask: Flask.FlaskUnknown,
+	food: Food.FoodUnknown,
+	mainHandImbue: WeaponImbue.RockbiterWeapon,
+	offHandImbue: WeaponImbue.RockbiterWeapon,
+});

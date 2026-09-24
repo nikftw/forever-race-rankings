@@ -656,7 +656,7 @@ function FactionSpecs({
   );
 }
 
-const canResim = process.env.NEXT_PUBLIC_CAN_RESIM !== "0";
+const canResim = true;
 
 export function RaceBoard() {
   const [mode, setMode] = useState<BoardMode>("dps");
@@ -699,106 +699,58 @@ export function RaceBoard() {
     mobType?: string;
     simLink?: string;
   }): Promise<boolean> {
-    const response = await fetch("/api/sim", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        mobType: dummy,
-        iterations,
-        ...body,
-      }),
-    });
-    if (!response.ok || !response.body) {
-      setError("Re-sim failed. Needs Go and ../wowsims-forever.");
+    if (!body?.spec) {
+      setError("Batch re-sim is not supported in the browser. Please re-sim an individual spec.");
       return false;
     }
-    const reader = response.body.getReader();
-    const decoder = new TextDecoder();
-    let buffer = "";
-    let ok = false;
-    while (true) {
-      const { done, value } = await reader.read();
-      if (done) {
-        break;
-      }
-      buffer += decoder.decode(value, { stream: true });
-      let newline = buffer.indexOf("\n");
-      while (newline >= 0) {
-        const line = buffer.slice(0, newline).trim();
-        buffer = buffer.slice(newline + 1);
-        if (line) {
-          const eventOk = applySimEvent(line);
-          if (eventOk === false) {
-            return false;
-          }
-          if (eventOk === "done") {
-            ok = true;
-          }
-        }
-        newline = buffer.indexOf("\n");
-      }
-    }
-    return ok;
-  }
-
-  function applySimEvent(line: string): boolean | "done" {
-    let event: {
-      type?: string;
-      index?: number;
-      total?: number;
-      error?: string;
-      row?: StoredRow;
-      results?: StoredResults;
-    };
-    try {
-      event = JSON.parse(line) as typeof event;
-    } catch {
-      return true;
-    }
-    if (event.type === "start") {
+    
+    return new Promise((resolve) => {
       setProgress({
         index: 0,
-        total: event.total ?? 0,
-        label: `0 / ${event.total ?? 0}`,
+        total: 10,
+        label: `Simulating ${body.spec}... (WASM)`,
       });
-      return true;
-    }
-    if (event.type === "combo" && event.row) {
-      upsertSimRow(event.row);
-      setVersion((current) => current + 1);
-      setProgress({
-        index: event.index ?? 0,
-        total: event.total ?? 0,
-        label: `${event.row.specId} ${event.row.raceId}  ${event.index ?? 0} / ${event.total ?? 0}`,
-      });
-      return true;
-    }
-    if (event.type === "done" && event.results) {
-      replaceSimResults(event.results);
-      setVersion((current) => current + 1);
-      setProgress(null);
-      return "done";
-    }
-    if (event.type === "error") {
-      setError(event.error || "Re-sim failed. Needs Go and ../wowsims-forever.");
-      setProgress(null);
-      return false;
-    }
-    return true;
+
+      const worker = new Worker('worker.js');
+      
+      worker.onmessage = (e) => {
+        const event = e.data;
+        if (event.type === 'ready') {
+          worker.postMessage({
+            specId: body.spec,
+            talents: body.talents,
+            iters: iterations,
+            seed: 0,
+            mobType: body.mobType || dummy
+          });
+        } else if (event.type === 'done' && event.results) {
+          // Instead of replacing all results, we merge the new rows in
+          // to preserve the other specs' rankings.
+          const newRows = event.results.rows || [];
+          for (const row of newRows) {
+            upsertSimRow(row);
+          }
+          setVersion((current) => current + 1);
+          setProgress(null);
+          resolve(true);
+          worker.terminate();
+        } else if (event.type === 'error') {
+          setError(event.error || "WASM simulation failed.");
+          setProgress(null);
+          resolve(false);
+          worker.terminate();
+        }
+      };
+
+      worker.onerror = (err) => {
+        setError(err.message || "Worker error.");
+        setProgress(null);
+        resolve(false);
+        worker.terminate();
+      };
+    });
   }
 
-  async function refreshSims(): Promise<void> {
-    setBusy(true);
-    setError(null);
-    try {
-      await postSim();
-    } catch (cause) {
-      setError(cause instanceof Error ? cause.message : "Re-sim failed.");
-    } finally {
-      setBusy(false);
-      setProgress(null);
-    }
-  }
 
   async function changeMobType(next: string): Promise<void> {
     if (!isMobType(next) || next === dummy) {
@@ -1017,16 +969,7 @@ export function RaceBoard() {
               ))}
             </select>
           </label>
-          {canResim ? (
-            <button
-              type="button"
-              onClick={() => void refreshSims()}
-              disabled={busy || busySpec !== null}
-              className="border border-[var(--gold)] px-2 py-1 font-[family-name:var(--font-display)] text-[11px] tracking-[0.12em] uppercase text-[var(--gold)] disabled:opacity-50"
-            >
-              {busy ? "Re-simming…" : "Refresh all sims"}
-            </button>
-          ) : null}
+
         </div>
       </div>
       {error ? (

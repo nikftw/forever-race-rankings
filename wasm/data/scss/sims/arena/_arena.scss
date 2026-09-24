@@ -1,0 +1,341 @@
+// The global .container is display:flex with no direction, so anything using it has to say
+// which way it runs.
+#arena-page {
+	.container {
+		flex-direction: column;
+	}
+
+	.arena-header {
+		border-bottom: $border-default;
+		background: var(--bs-black-alpha-30);
+	}
+
+	.arena-header-container {
+		flex-direction: row;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: var(--gap-width);
+		padding-top: calc(var(--container-padding) / 2);
+		padding-bottom: calc(var(--container-padding) / 2);
+	}
+
+	.arena-home-link {
+		display: block;
+
+		.forever-logo {
+			width: 12rem;
+			max-width: 100%;
+		}
+	}
+
+	// min-width:0 so a long word cannot push the flex item past the viewport.
+	.arena-title-block {
+		flex: 1 1 20rem;
+		min-width: 0;
+	}
+
+	.arena-title {
+		margin: 0;
+		font-size: 1.75rem;
+		color: var(--bs-white);
+	}
+
+	.arena-subtitle {
+		margin: var(--spacer-2) 0 0;
+		max-width: 52rem;
+		color: var(--bs-gray-400);
+	}
+
+	.arena-content {
+		gap: var(--spacer-3);
+		padding-top: var(--container-padding);
+		padding-bottom: var(--container-padding);
+		color: var(--bs-gray-300);
+	}
+
+	// Two blocks side by side on a wide screen, stacked on a phone. minmax(min(26rem,100%),1fr)
+	// rather than a plain 1fr, because a 1fr track will not shrink below its content and that
+	// is how a paragraph escapes the grid.
+	.arena-intro {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(min(26rem, 100%), 1fr));
+		gap: var(--spacer-3);
+	}
+
+	.arena-intro-block {
+		min-width: 0;
+		padding: var(--spacer-3) var(--spacer-4);
+		border: 1px solid rgba(255, 255, 255, 0.14);
+		border-radius: var(--bs-border-radius);
+		background: rgba(0, 0, 0, 0.2);
+		font-size: 0.9rem;
+
+		p {
+			margin: 0 0 var(--spacer-2);
+
+			&:last-child {
+				margin-bottom: 0;
+			}
+		}
+	}
+
+	.arena-intro-title {
+		margin: 0 0 var(--spacer-2);
+		font-size: 1.05rem;
+		color: var(--bs-white);
+	}
+
+	.arena-controls {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: var(--spacer-2) var(--spacer-3);
+	}
+
+	.arena-toggle {
+		padding: 0.35rem 0.9rem;
+		border: 1px solid var(--bs-brand);
+		border-radius: 999px;
+		background: transparent;
+		color: var(--bs-white);
+		font: inherit;
+		font-size: 0.9rem;
+		cursor: pointer;
+
+		&:hover,
+		&:focus-visible {
+			background: rgba(224, 163, 53, 0.15);
+		}
+	}
+
+	.arena-count {
+		margin: 0;
+		color: var(--bs-gray-500);
+	}
+
+	.arena-brackets {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--spacer-1);
+	}
+
+	.arena-bracket {
+		display: inline-flex;
+		align-items: center;
+		gap: var(--spacer-1);
+		padding: 0.3rem 0.7rem;
+		border: 1px solid rgba(255, 255, 255, 0.18);
+		border-radius: 999px;
+		background: transparent;
+		color: var(--bs-gray-300);
+		font: inherit;
+		font-size: 0.85rem;
+		cursor: pointer;
+
+		&:hover {
+			border-color: var(--bs-brand);
+			color: var(--bs-white);
+		}
+	}
+
+	// How many specs have any gear in the band. A bracket holding three of them is a much
+	// narrower comparison than one holding eleven, and that is worth seeing before clicking.
+	.arena-bracket-count {
+		color: var(--bs-gray-500);
+		font-variant-numeric: tabular-nums;
+	}
+
+	.arena-bracket-on {
+		border-color: var(--bs-brand);
+		background: rgba(224, 163, 53, 0.15);
+		color: var(--bs-white);
+	}
+
+	.arena-spread {
+		margin: 0;
+		color: var(--bs-gray-500);
+		font-size: 0.9rem;
+
+		&:empty {
+			display: none;
+		}
+	}
+
+	// Says the rows are not wearing comparable gear, which is the one thing a ranking table
+	// has to admit out loud rather than leave to be worked out from a column.
+	.arena-spread-wide {
+		color: var(--bs-brand);
+	}
+
+	.arena-ilvl-cell {
+		text-align: right;
+		font-variant-numeric: tabular-nums;
+	}
+
+	.arena-ilvl {
+		display: block;
+		color: var(--bs-gray-200);
+	}
+
+	.arena-slots {
+		display: block;
+		color: #c1666b;
+		font-size: 0.7rem;
+		cursor: help;
+	}
+
+	// Six columns is more than a phone fits, and the table is the page, so it is allowed to
+	// scroll sideways inside its own box rather than pushing the whole document wider.
+	.arena-table {
+		display: block;
+		width: 100%;
+		overflow-x: auto;
+		border-collapse: collapse;
+
+		// The shared metrics-table centres its cells, which reads as a column of names drifting
+		// away from the icon beside them.
+		th,
+		td {
+			padding: var(--spacer-1) var(--spacer-2);
+			vertical-align: middle;
+			white-space: nowrap;
+			text-align: left;
+		}
+	}
+
+	.arena-rank-cell {
+		width: 3ch;
+		text-align: right;
+		color: var(--bs-gray-500);
+		font-variant-numeric: tabular-nums;
+	}
+
+	.arena-build-cell {
+		.metrics-action-icon {
+			margin-right: var(--spacer-2);
+			vertical-align: middle;
+		}
+	}
+
+	.arena-build-names {
+		display: inline-flex;
+		flex-direction: column;
+		vertical-align: middle;
+	}
+
+	.arena-spec-name {
+		font-size: 0.75rem;
+		color: var(--bs-gray-400);
+	}
+
+	.arena-talents {
+		font-weight: 600;
+	}
+
+	// The x/y/z split, because a build named "31 Fury" and a build named "Fury 17/34/0" are
+	// the same kind of thing and should not need different reading.
+	.arena-split {
+		color: var(--bs-gray-500);
+		font-size: 0.75rem;
+		font-variant-numeric: tabular-nums;
+	}
+
+	// A build nobody wrote down. Marked rather than hidden: it is the most interesting row in
+	// the table and also the one carrying the most assumptions.
+	.arena-found {
+		align-self: flex-start;
+		margin-top: 2px;
+		padding: 0 0.4rem;
+		border: 1px solid var(--bs-brand);
+		border-radius: 999px;
+		color: var(--bs-brand);
+		font-size: 0.7rem;
+		cursor: help;
+	}
+
+	// Not a style of build, a defect in one. Red rather than gold: gold on this site means
+	// "unconfirmed", and this is not unconfirmed, it is wrong.
+	.arena-short {
+		align-self: flex-start;
+		margin-top: 2px;
+		padding: 0 0.4rem;
+		border: 1px solid #c1666b;
+		border-radius: 999px;
+		color: #c1666b;
+		font-size: 0.7rem;
+		cursor: help;
+	}
+
+	.arena-setup-cell {
+		font-size: 0.85rem;
+	}
+
+	.arena-setup {
+		display: block;
+		color: var(--bs-gray-300);
+	}
+
+	.arena-setup-quiet {
+		color: var(--bs-gray-500);
+	}
+
+	.arena-dps-cell {
+		text-align: right;
+		font-variant-numeric: tabular-nums;
+	}
+
+	// The one column allowed to take whatever is left, so the bars are long enough to read.
+	.arena-share-cell {
+		width: 100%;
+		min-width: 10rem;
+	}
+
+	.arena-share {
+		display: flex;
+		align-items: center;
+		gap: var(--spacer-2);
+	}
+
+	.arena-share-bar {
+		position: relative;
+		flex: 1;
+		min-width: 2.5rem;
+		height: 0.75rem;
+		background-color: color-mix(in srgb, var(--bs-white) 5%, transparent);
+	}
+
+	.arena-share-bar-fill {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: var(--percentage);
+		height: 100%;
+	}
+
+	.arena-share-percent {
+		width: 5ch;
+		flex-shrink: 0;
+		text-align: right;
+		font-variant-numeric: tabular-nums;
+	}
+
+	.arena-row:nth-child(even) {
+		background: rgba(255, 255, 255, 0.03);
+	}
+
+	.arena-notes {
+		margin: var(--spacer-3) 0 0;
+		padding-left: var(--spacer-4);
+		max-width: 60rem;
+		color: var(--bs-gray-400);
+		font-size: 0.9rem;
+
+		li + li {
+			margin-top: var(--spacer-2);
+		}
+	}
+
+	.arena-stale {
+		color: var(--bs-brand);
+	}
+}

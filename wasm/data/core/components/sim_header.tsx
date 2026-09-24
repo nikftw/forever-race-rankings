@@ -1,0 +1,300 @@
+import tippy, { ReferenceElement as TippyReferenceElement } from 'tippy.js';
+import { ref } from 'tsx-vanilla';
+
+import { SITE_REPO_URL } from '../constants/other.js';
+import { Ruleset } from '../proto/api';
+import { SimUI } from '../sim_ui';
+import { isLocal } from '../utils';
+import { Component } from './component';
+import { Exporter } from './exporter';
+import { FeedbackMenu } from './feedback_menu';
+import { Importer } from './importer';
+import { SettingsMenu } from './settings_menu';
+import { SimTab } from './sim_tab';
+import { SocialLinks } from './social_links';
+
+interface ToolbarLinkArgs {
+	parent: HTMLElement;
+	href?: string;
+	text?: string;
+	icon?: string;
+	tooltip?: string | HTMLElement;
+	classes?: string;
+	onclick?: () => void;
+}
+
+export class SimHeader extends Component {
+	private simUI: SimUI;
+
+	private simTabsContainer: HTMLElement;
+	private simToolbar: HTMLElement;
+	private knownIssuesLink: TippyReferenceElement<HTMLElement>;
+	private knownIssuesContent: HTMLUListElement;
+
+	constructor(parentElem: HTMLElement, simUI: SimUI) {
+		super(parentElem, 'sim-header');
+		this.simUI = simUI;
+		this.simTabsContainer = this.rootElem.querySelector('.sim-tabs') as HTMLElement;
+		this.simToolbar = this.rootElem.querySelector('.sim-toolbar') as HTMLElement;
+
+		this.knownIssuesContent = (<ul className="text-start ps-3 mb-0"></ul>) as HTMLUListElement;
+		this.addRulesetLabel();
+		this.knownIssuesLink = this.addKnownIssuesLink();
+		this.addBugReportLink();
+		this.addFeedbackLink();
+		this.addDownloadBinaryLink();
+		this.addSimOptionsLink();
+		this.addSocialLinks();
+
+		// Allow styling the sticky header
+		new IntersectionObserver(([e]) => e.target.classList.toggle('stuck', e.intersectionRatio < 1), { threshold: [1] }).observe(this.rootElem);
+	}
+
+	activateTab(className: string) {
+		(this.simTabsContainer.getElementsByClassName(className)[0] as HTMLElement).click();
+	}
+
+	addTab(title: string, contentId: string) {
+		const isFirstTab = this.simTabsContainer.children.length == 0;
+
+		const classes = `${contentId} nav-item`;
+		const tab = (
+			<li className={classes} attributes={{ role: 'presentation' }}>
+				<a
+					className={`nav-link ${isFirstTab && 'active'}`}
+					dataset={{
+						bsToggle: 'tab',
+						bsTarget: `#${contentId}`,
+					}}
+					attributes={{
+						role: 'tab',
+						'aria-selected': isFirstTab,
+					}}
+					type="button">
+					{title}
+				</a>
+			</li>
+		);
+		tab.setAttribute('aria-controls', contentId);
+
+		this.simTabsContainer.appendChild(tab);
+	}
+
+	addSimTabLink(tab: SimTab) {
+		const isFirstTab = this.simTabsContainer.children.length == 0;
+
+		tab.navLink.setAttribute('aria-selected', isFirstTab.toString());
+
+		if (isFirstTab) tab.navLink.classList.add('active', 'show');
+
+		this.simTabsContainer.appendChild(tab.navItem);
+	}
+
+	addImportLink(label: string, importer: Importer, hideInRaidSim?: boolean) {
+		this.addImportExportLink('.import-dropdown', label, importer, hideInRaidSim);
+	}
+	addExportLink(label: string, exporter: Exporter, hideInRaidSim?: boolean) {
+		this.addImportExportLink('.export-dropdown', label, exporter, hideInRaidSim);
+	}
+	private addImportExportLink(cssClass: string, label: string, importerExporter: Importer | Exporter, _hideInRaidSim?: boolean) {
+		const dropdownElem = this.rootElem.querySelector<HTMLElement>(cssClass)!;
+		const menuElem = dropdownElem.querySelector<HTMLElement>('.dropdown-menu')!;
+		const linkRef = ref<HTMLAnchorElement>();
+
+		menuElem.appendChild(
+			<li>
+				<a
+					ref={linkRef}
+					href="javascript:void(0)"
+					className="dropdown-item"
+					attributes={{
+						role: 'button',
+					}}>
+					{label}
+				</a>
+			</li>,
+		);
+		linkRef.value?.addEventListener('click', () => importerExporter.open());
+	}
+
+	private addToolbarLink(args: ToolbarLinkArgs): HTMLElement {
+		const linkRef = ref<HTMLAnchorElement>();
+
+		args.parent.appendChild(
+			<div className="sim-toolbar-item">
+				<a ref={linkRef} href={args.href ? args.href : 'javascript:void(0)'} className={args.classes || ''} target={args.href ? '_blank' : '_self'}>
+					{args.icon && <i className={args.icon}></i>}
+					{args.text ? ` ${args.text} ` : ''}
+				</a>
+			</div>,
+		);
+
+		if (linkRef.value) {
+			if (args.onclick) linkRef.value.addEventListener('click', args.onclick);
+
+			if (args.tooltip)
+				tippy(linkRef.value, {
+					content: args.tooltip,
+					placement: 'bottom',
+				});
+		}
+		return linkRef.value!;
+	}
+
+	// The sim can run either ruleset, and which one is active changes the numbers, so it
+	// belongs somewhere the user cannot miss it rather than only in the options modal.
+	private addRulesetLabel() {
+		const labelRef = ref<HTMLSpanElement>();
+
+		this.simToolbar.appendChild(
+			<div className="sim-toolbar-item">
+				<span ref={labelRef} className="ruleset-label"></span>
+			</div>,
+		);
+
+		const label = labelRef.value!;
+		const updateLabel = () => {
+			const isForever = this.simUI.sim.getRuleset() == Ruleset.RulesetForever;
+			label.textContent = isForever ? 'Forever Rules' : 'Classic Era Rules';
+			label.classList.toggle('text-brand', isForever);
+		};
+		updateLabel();
+		this.simUI.sim.rulesetChangeEmitter.on(updateLabel);
+
+		tippy(label, {
+			content: 'The ruleset being simulated. Change it under Sim Options.',
+			placement: 'bottom',
+		});
+	}
+
+	private addKnownIssuesLink() {
+		return this.addToolbarLink({
+			parent: this.simToolbar,
+			text: 'Known Issues',
+			tooltip: this.knownIssuesContent,
+			classes: 'known-issues link-danger hide',
+		});
+	}
+
+	addKnownIssue(issue: string) {
+		const listItem = (<li></li>) as HTMLLIElement;
+		// Using innerHTML here because the issue text can contain stringified HTML
+		listItem.innerHTML = issue;
+		this.knownIssuesContent.appendChild(listItem);
+
+		this.knownIssuesLink.classList.remove('hide');
+		this.knownIssuesLink._tippy?.setContent(this.knownIssuesContent);
+	}
+
+	private addBugReportLink() {
+		this.addToolbarLink({
+			href: `${SITE_REPO_URL}/issues/new/choose`,
+			parent: this.simToolbar,
+			icon: 'fas fa-bug fa-lg',
+			tooltip: 'Report a bug or<br>Request a feature',
+		});
+	}
+
+	private addFeedbackLink() {
+		const feedbackMenu = new FeedbackMenu(this.simUI.rootElem, this.simUI);
+		this.addToolbarLink({
+			parent: this.simToolbar,
+			icon: 'fas fa-comment-dots fa-lg',
+			tooltip: 'Send feedback with<br>a screenshot',
+			classes: 'feedback',
+			onclick: () => feedbackMenu.open(),
+		});
+	}
+
+	private addDownloadBinaryLink() {
+		const href = `${SITE_REPO_URL}/releases`;
+		const icon = 'fas fa-gauge-high fa-lg';
+		const parent = this.simToolbar;
+
+		if (isLocal()) {
+			fetch('/version').then(resp => {
+				resp.json()
+					.then(versionInfo => {
+						if (versionInfo.outdated == 2) {
+							this.addToolbarLink({
+								href: href,
+								parent: parent,
+								icon: icon,
+								tooltip: 'Newer version of simulator available for download',
+								classes: 'downbin link-danger',
+							});
+						}
+					})
+					.catch(_error => {
+						console.warn('No version info found!');
+					});
+			});
+		} else {
+			this.addToolbarLink({
+				href: href,
+				parent: parent,
+				icon: icon,
+				tooltip: 'Download simulator for faster simulating',
+				classes: 'downbin',
+			});
+		}
+	}
+
+	private addSimOptionsLink() {
+		const settingsMenu = new SettingsMenu(this.simUI.rootElem, this.simUI);
+		this.addToolbarLink({
+			parent: this.simToolbar,
+			icon: 'fas fa-cog fa-lg',
+			tooltip: 'Show Sim Options',
+			classes: 'sim-options',
+			onclick: () => settingsMenu.open(),
+		});
+	}
+
+	private addSocialLinks() {
+		const container = document.createElement('div');
+		container.classList.add('sim-toolbar-socials');
+		this.simToolbar.appendChild(container);
+
+		this.addGitHubLink(container);
+	}
+
+	private addGitHubLink(container: HTMLElement) {
+		container.appendChild(<div className="sim-toolbar-item">{SocialLinks.buildGitHubLink()}</div>);
+	}
+
+	protected customRootElement(): HTMLElement {
+		return (
+			<header className="sim-header">
+				<div className="sim-header-container">
+					<ul className="sim-tabs nav nav-tabs" attributes={{ role: 'tablist' }}></ul>
+					<div className="import-export within-raid-sim-hide">
+						<div className="dropdown sim-dropdown-menu import-dropdown">
+							<a
+								href="javascript:void(0)"
+								className="import-link"
+								attributes={{ role: 'button', 'aria-expanded': 'false' }}
+								dataset={{ bsToggle: 'dropdown', bsDisplay: 'dynamic' }}>
+								<i className="fa fa-download"></i>
+								{' Import '}
+							</a>
+							<ul className="dropdown-menu"></ul>
+						</div>
+						<div className="dropdown sim-dropdown-menu export-dropdown">
+							<a
+								href="javascript:void(0)"
+								className="export-link"
+								attributes={{ role: 'button', 'aria-expanded': 'false' }}
+								dataset={{ bsToggle: 'dropdown', bsDisplay: 'dynamic' }}>
+								<i className="fa fa-right-from-bracket"></i>
+								{' Export '}
+							</a>
+							<ul className="dropdown-menu"></ul>
+						</div>
+					</div>
+					<div className="sim-toolbar"></div>
+				</div>
+			</header>
+		) as HTMLElement;
+	}
+}

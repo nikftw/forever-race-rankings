@@ -1,0 +1,1502 @@
+[
+  {
+    "name": "Assassination",
+    "backgroundUrl": "https://wow.zamimg.com/images/wow/talents/backgrounds/classic/182.jpg",
+    "talents": [
+      {
+        "fieldName": "improvedGouge",
+        "location": {
+          "rowIdx": 0,
+          "colIdx": 0
+        },
+        "spellIds": [
+          13741,
+          13792,
+          13793
+        ],
+        "maxPoints": 3,
+        "name": "Improved Gouge",
+        "icon": "ability_gouge",
+        "description": "Increases the duration of your Gouge ability by {0} sec.",
+        "ranks": [
+          [
+            0.5
+          ],
+          [
+            1
+          ],
+          [
+            1.5
+          ]
+        ],
+        "notSimulated": true
+      },
+      {
+        "fieldName": "remorselessAttacks",
+        "location": {
+          "rowIdx": 0,
+          "colIdx": 1
+        },
+        "spellIds": [
+          14144,
+          14148
+        ],
+        "maxPoints": 2,
+        "name": "Remorseless Attacks",
+        "icon": "ability_fiegndead",
+        "description": "After killing a non-trivial enemy, gives you a {0}% increased critical strike chance on your next Sinister Strike, Backstab, Ambush, Mutilate, or Ghostly Strike. Lasts 20 sec.",
+        "ranks": [
+          [
+            20
+          ],
+          [
+            40
+          ]
+        ],
+        "notSimulated": true
+      },
+      {
+        "fieldName": "malice",
+        "location": {
+          "rowIdx": 0,
+          "colIdx": 2
+        },
+        "spellIds": [
+          14138,
+          14139,
+          14140,
+          14141,
+          14142
+        ],
+        "maxPoints": 5,
+        "name": "Malice",
+        "icon": "ability_racial_bloodrage",
+        "description": "Increases your critical strike chance with all attacks and Poisons by {0}%.",
+        "ranks": [
+          [
+            1
+          ],
+          [
+            2
+          ],
+          [
+            3
+          ],
+          [
+            4
+          ],
+          [
+            5
+          ]
+        ]
+      },
+      {
+        "fieldName": "ruthlessness",
+        "location": {
+          "rowIdx": 1,
+          "colIdx": 0
+        },
+        "spellIds": [
+          14156,
+          14160,
+          14161
+        ],
+        "maxPoints": 3,
+        "name": "Ruthlessness",
+        "icon": "ability_druid_disembowel",
+        "description": "Gives your finishing moves a {0}% chance to add a Combo Point to your target.",
+        "ranks": [
+          [
+            20
+          ],
+          [
+            40
+          ],
+          [
+            60
+          ]
+        ]
+      },
+      {
+        "fieldName": "murder",
+        "location": {
+          "rowIdx": 1,
+          "colIdx": 1
+        },
+        "spellIds": [
+          14158,
+          14159
+        ],
+        "maxPoints": 2,
+        "name": "Murder",
+        "icon": "spell_shadow_deathscream",
+        "description": "Increases all damage dealt by {0}% against Humanoid and Giant targets.",
+        "ranks": [
+          [
+            2
+          ],
+          [
+            4
+          ]
+        ]
+      },
+      {
+        "fieldName": "improvedSliceAndDice",
+        "location": {
+          "rowIdx": 1,
+          "colIdx": 3
+        },
+        "spellIds": [
+          14165,
+          14166,
+          14167
+        ],
+        "maxPoints": 3,
+        "name": "Improved Slice and Dice",
+        "icon": "ability_rogue_slicedice",
+        "description": "Increases the duration of your Slice and Dice ability by {0}%.",
+        "ranks": [
+          [
+            15
+          ],
+          [
+            30
+          ],
+          [
+            45
+          ]
+        ]
+      },
+      {
+        "fieldName": "relentlessStrikes",
+        "location": {
+          "rowIdx": 2,
+          "colIdx": 0
+        },
+        "spellIds": [
+          14179
+        ],
+        "maxPoints": 1,
+        "name": "Relentless Strikes",
+        "icon": "ability_warrior_decisivestrike",
+        "description": "Your finishing moves have a {0}% chance per Combo Point to restore {1} Energy.",
+        "ranks": [
+          [
+            20,
+            25
+          ]
+        ]
+      },
+      {
+        "fieldName": "improvedExposeArmor",
+        "location": {
+          "rowIdx": 2,
+          "colIdx": 1
+        },
+        "spellIds": [
+          14168,
+          14169
+        ],
+        "maxPoints": 2,
+        "name": "Improved Expose Armor",
+        "icon": "ability_warrior_riposte",
+        "description": "Reduces the Energy cost of your Expose Armor ability by {0}, and refunds {1} Combo Point{2} when cast with {3} Combo Points.",
+        "ranks": [
+          [
+            5,
+            1,
+            "",
+            5
+          ],
+          [
+            10,
+            2,
+            "s",
+            5
+          ]
+        ]
+      },
+      {
+        "fieldName": "lethality",
+        "location": {
+          "rowIdx": 2,
+          "colIdx": 2
+        },
+        "prereqLocation": {
+          "rowIdx": 0,
+          "colIdx": 2
+        },
+        "spellIds": [
+          14128,
+          14132,
+          14135,
+          14136,
+          14137
+        ],
+        "maxPoints": 5,
+        "name": "Lethality",
+        "icon": "ability_criticalstrike",
+        "description": "Increases the critical strike damage bonus of your Sinister Strike, Gouge, Backstab, Mutilate, Ghostly Strike, and Hemorrhage abilities by {0}%.",
+        "ranks": [
+          [
+            4
+          ],
+          [
+            8
+          ],
+          [
+            12
+          ],
+          [
+            16
+          ],
+          [
+            20
+          ]
+        ]
+      },
+      {
+        "fieldName": "vilePoisons",
+        "location": {
+          "rowIdx": 3,
+          "colIdx": 0
+        },
+        "spellIds": [
+          16513,
+          16514,
+          16515,
+          16719,
+          16720
+        ],
+        "maxPoints": 5,
+        "name": "Vile Poisons",
+        "icon": "ability_rogue_feigndeath",
+        "description": "Increases the damage dealt by your poisons by {0}% and gives your poisons an additional {1}% chance to resist dispel effects.",
+        "ranks": [
+          [
+            4,
+            8
+          ],
+          [
+            8,
+            16
+          ],
+          [
+            12,
+            24
+          ],
+          [
+            16,
+            32
+          ],
+          [
+            20,
+            40
+          ]
+        ]
+      },
+      {
+        "fieldName": "coldBlood",
+        "location": {
+          "rowIdx": 3,
+          "colIdx": 1
+        },
+        "spellIds": [
+          14177
+        ],
+        "maxPoints": 1,
+        "name": "Cold Blood",
+        "icon": "spell_ice_lament",
+        "description": "When activated, increases the critical strike chance of your next Sinister Strike, Backstab, Ambush, Eviscerate, or Mutilate by {0}%.",
+        "ranks": [
+          [
+            100
+          ]
+        ]
+      },
+      {
+        "fieldName": "improvedPoisons",
+        "location": {
+          "rowIdx": 3,
+          "colIdx": 2
+        },
+        "spellIds": [
+          14113,
+          14114,
+          14115,
+          14116,
+          14117
+        ],
+        "maxPoints": 5,
+        "name": "Improved Poisons",
+        "icon": "ability_poisons",
+        "description": "Increases the chance to apply Poisons to your target by {0}%, and gives Poison applications a {1}% chance to not consume a charge.",
+        "ranks": [
+          [
+            2,
+            10
+          ],
+          [
+            4,
+            20
+          ],
+          [
+            6,
+            30
+          ],
+          [
+            8,
+            40
+          ],
+          [
+            10,
+            50
+          ]
+        ]
+      },
+      {
+        "fieldName": "vigor",
+        "location": {
+          "rowIdx": 4,
+          "colIdx": 0
+        },
+        "spellIds": [
+          14983,
+          0
+        ],
+        "maxPoints": 2,
+        "name": "Vigor",
+        "icon": "spell_nature_earthbindtotem",
+        "description": "Increases your maximum Energy by {0}.",
+        "ranks": [
+          [
+            5
+          ],
+          [
+            10
+          ]
+        ]
+      },
+      {
+        "fieldName": "mutilate",
+        "location": {
+          "rowIdx": 4,
+          "colIdx": 1
+        },
+        "spellIds": [
+          0
+        ],
+        "maxPoints": 1,
+        "name": "Mutilate",
+        "icon": "ability_rogue_deadlybrew",
+        "description": "Instantly attacks with both weapons for {0}% weapon damage plus an additional {1} with each weapon. Damage increased by {2}% against Poisoned targets. Awards {3} Combo Points.",
+        "ranks": [
+          [
+            75,
+            13,
+            20,
+            2
+          ]
+        ]
+      },
+      {
+        "fieldName": "improvedKidneyShot",
+        "location": {
+          "rowIdx": 4,
+          "colIdx": 2
+        },
+        "spellIds": [
+          14174,
+          14175
+        ],
+        "maxPoints": 2,
+        "name": "Improved Kidney Shot",
+        "icon": "ability_rogue_kidneyshot",
+        "description": "Enemies Stunned by your Kidney Shot ability take {0}% increased damage from your poisons and attacks.",
+        "ranks": [
+          [
+            5
+          ],
+          [
+            10
+          ]
+        ],
+        "notSimulated": true
+      },
+      {
+        "fieldName": "sealFate",
+        "location": {
+          "rowIdx": 5,
+          "colIdx": 2
+        },
+        "spellIds": [
+          14186,
+          14190,
+          14193,
+          14194,
+          14195
+        ],
+        "maxPoints": 5,
+        "name": "Seal Fate",
+        "icon": "spell_shadow_chilltouch",
+        "description": "Your critical strikes from abilities that add Combo Points have a {0}% chance to add an additional Combo Point.",
+        "ranks": [
+          [
+            20
+          ],
+          [
+            40
+          ],
+          [
+            60
+          ],
+          [
+            80
+          ],
+          [
+            100
+          ]
+        ]
+      },
+      {
+        "fieldName": "venom",
+        "location": {
+          "rowIdx": 6,
+          "colIdx": 1
+        },
+        "spellIds": [
+          0
+        ],
+        "maxPoints": 1,
+        "name": "Venom",
+        "icon": "inv_sword_31",
+        "description": "Finishing move that increases the damage of your Poisons by {0}% and your chance to apply Poisons by {1}%. Lasts longer per combo point: {2} point: {3} seconds {4} points: {5} seconds {6} points: {7} seconds {8} points: {9} seconds {10} points: {11} seconds",
+        "ranks": [
+          [
+            30,
+            10,
+            1,
+            9,
+            2,
+            12,
+            3,
+            15,
+            4,
+            18,
+            5,
+            21
+          ]
+        ],
+        "prereqLocation": {
+          "rowIdx": 4,
+          "colIdx": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "Combat",
+    "backgroundUrl": "https://wow.zamimg.com/images/wow/talents/backgrounds/classic/181.jpg",
+    "talents": [
+      {
+        "fieldName": "improvedEviscerate",
+        "location": {
+          "rowIdx": 0,
+          "colIdx": 0
+        },
+        "spellIds": [
+          14162,
+          14163,
+          14164
+        ],
+        "maxPoints": 3,
+        "name": "Improved Eviscerate",
+        "icon": "ability_rogue_eviscerate",
+        "description": "Increases the damage done by your Eviscerate ability by {0}%.",
+        "ranks": [
+          [
+            7
+          ],
+          [
+            13
+          ],
+          [
+            20
+          ]
+        ]
+      },
+      {
+        "fieldName": "improvedSinisterStrike",
+        "location": {
+          "rowIdx": 0,
+          "colIdx": 1
+        },
+        "spellIds": [
+          13732,
+          13863
+        ],
+        "maxPoints": 2,
+        "name": "Improved Sinister Strike",
+        "icon": "spell_shadow_ritualofsacrifice",
+        "description": "Reduces the Energy cost of your Sinister Strike ability by {0}.",
+        "ranks": [
+          [
+            3
+          ],
+          [
+            5
+          ]
+        ]
+      },
+      {
+        "fieldName": "lightningReflexes",
+        "location": {
+          "rowIdx": 0,
+          "colIdx": 2
+        },
+        "spellIds": [
+          13712,
+          13788,
+          13789,
+          13790,
+          13791
+        ],
+        "maxPoints": 5,
+        "name": "Lightning Reflexes",
+        "icon": "spell_nature_invisibilty",
+        "description": "Increases your Dodge chance by {0}%.",
+        "ranks": [
+          [
+            1
+          ],
+          [
+            2
+          ],
+          [
+            3
+          ],
+          [
+            4
+          ],
+          [
+            5
+          ]
+        ]
+      },
+      {
+        "fieldName": "puncturingWounds",
+        "location": {
+          "rowIdx": 1,
+          "colIdx": 0
+        },
+        "spellIds": [
+          0,
+          0,
+          0
+        ],
+        "maxPoints": 3,
+        "name": "Puncturing Wounds",
+        "icon": "ability_backstab",
+        "description": "Increases the critical strike chance of your Backstab by {0}% and your Mutilate by {1}%, and gives Backstab a {2}% chance to add an additional Combo Point.",
+        "ranks": [
+          [
+            10,
+            5,
+            15
+          ],
+          [
+            20,
+            10,
+            30
+          ],
+          [
+            30,
+            15,
+            45
+          ]
+        ]
+      },
+      {
+        "fieldName": "deflection",
+        "location": {
+          "rowIdx": 1,
+          "colIdx": 1
+        },
+        "spellIds": [
+          13713,
+          13853,
+          13854
+        ],
+        "maxPoints": 3,
+        "name": "Deflection",
+        "icon": "ability_parry",
+        "description": "Increases your Parry chance by {0}%.",
+        "ranks": [
+          [
+            2
+          ],
+          [
+            4
+          ],
+          [
+            6
+          ]
+        ]
+      },
+      {
+        "fieldName": "precision",
+        "location": {
+          "rowIdx": 1,
+          "colIdx": 2
+        },
+        "spellIds": [
+          13705,
+          13832,
+          13843
+        ],
+        "maxPoints": 3,
+        "name": "Precision",
+        "icon": "ability_marksmanship",
+        "description": "Improves your chance to hit by {0}%.",
+        "ranks": [
+          [
+            1
+          ],
+          [
+            2
+          ],
+          [
+            3
+          ]
+        ]
+      },
+      {
+        "fieldName": "endurance",
+        "location": {
+          "rowIdx": 2,
+          "colIdx": 0
+        },
+        "spellIds": [
+          13742,
+          13872
+        ],
+        "maxPoints": 2,
+        "name": "Endurance",
+        "icon": "spell_shadow_shadowward",
+        "description": "Reduces the cooldown of your Sprint and Evasion abilities by {0}%.",
+        "ranks": [
+          [
+            30
+          ],
+          [
+            60
+          ]
+        ]
+      },
+      {
+        "fieldName": "riposte",
+        "location": {
+          "rowIdx": 2,
+          "colIdx": 1
+        },
+        "prereqLocation": {
+          "rowIdx": 1,
+          "colIdx": 1
+        },
+        "spellIds": [
+          14251
+        ],
+        "maxPoints": 1,
+        "name": "Riposte",
+        "icon": "ability_warrior_challange",
+        "description": "A strike that becomes active after parrying an opponent's attack. This attack deals {0}% weapon damage and disarms the target for {1} sec.",
+        "ranks": [
+          [
+            150,
+            6
+          ]
+        ]
+      },
+      {
+        "fieldName": "improvedSprint",
+        "location": {
+          "rowIdx": 2,
+          "colIdx": 3
+        },
+        "spellIds": [
+          13743,
+          13875
+        ],
+        "maxPoints": 2,
+        "name": "Improved Sprint",
+        "icon": "ability_rogue_sprint",
+        "description": "Gives a {0}% chance to remove all movement impairing effects when you activate your Sprint ability.",
+        "ranks": [
+          [
+            50
+          ],
+          [
+            100
+          ]
+        ],
+        "notSimulated": true
+      },
+      {
+        "fieldName": "improvedKick",
+        "location": {
+          "rowIdx": 3,
+          "colIdx": 0
+        },
+        "spellIds": [
+          13754,
+          13867
+        ],
+        "maxPoints": 2,
+        "name": "Improved Kick",
+        "icon": "ability_kick",
+        "description": "Gives your Kick ability a {0}% chance to Silence the target for 2 sec.",
+        "ranks": [
+          [
+            50
+          ],
+          [
+            100
+          ]
+        ],
+        "notSimulated": true
+      },
+      {
+        "fieldName": "flawlessExecution",
+        "location": {
+          "rowIdx": 3,
+          "colIdx": 1
+        },
+        "spellIds": [
+          0
+        ],
+        "maxPoints": 1,
+        "name": "Flawless Execution",
+        "icon": "inv_sword_35",
+        "description": "Reduces the Energy cost of your Eviscerate ability by {0}.",
+        "ranks": [
+          [
+            10
+          ]
+        ]
+      },
+      {
+        "fieldName": "dualWieldSpecialization",
+        "location": {
+          "rowIdx": 3,
+          "colIdx": 2
+        },
+        "prereqLocation": {
+          "rowIdx": 1,
+          "colIdx": 2
+        },
+        "spellIds": [
+          13715,
+          13848,
+          13849,
+          13851,
+          13852
+        ],
+        "maxPoints": 5,
+        "name": "Dual Wield Specialization",
+        "icon": "ability_dualwield",
+        "description": "Increases the damage done by your off-hand weapon by {0}%.",
+        "ranks": [
+          [
+            5
+          ],
+          [
+            10
+          ],
+          [
+            15
+          ],
+          [
+            20
+          ],
+          [
+            25
+          ]
+        ]
+      },
+      {
+        "fieldName": "bladeFlurry",
+        "location": {
+          "rowIdx": 4,
+          "colIdx": 1
+        },
+        "spellIds": [
+          13877
+        ],
+        "maxPoints": 1,
+        "name": "Blade Flurry",
+        "icon": "ability_warrior_punishingblow",
+        "description": "Increases your melee attack speed by {0}% and your melee attacks strike an additional nearby opponent. Lasts {1} sec.",
+        "ranks": [
+          [
+            20,
+            15
+          ]
+        ]
+      },
+      {
+        "fieldName": "hackAndSlash",
+        "location": {
+          "rowIdx": 4,
+          "colIdx": 2
+        },
+        "spellIds": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "maxPoints": 5,
+        "name": "Hack and Slash",
+        "icon": "inv_sword_27",
+        "description": "Gives your melee weapon attacks a benefit depending on the weapon. |CFFFFFFFFAxe/Sword: Your successful melee attacks have a {0}% chance to trigger an extra attack on the target. |CFFFFFFFFDagger/Fist: Increases your critical strike chance by {1}%. |CFFFFFFFFMace: Your attacks ignore {2}% of your target's armor.",
+        "ranks": [
+          [
+            1,
+            1,
+            3
+          ],
+          [
+            2,
+            2,
+            6
+          ],
+          [
+            3,
+            3,
+            9
+          ],
+          [
+            4,
+            4,
+            12
+          ],
+          [
+            5,
+            5,
+            15
+          ]
+        ]
+      },
+      {
+        "fieldName": "weaponExpertise",
+        "location": {
+          "rowIdx": 5,
+          "colIdx": 1
+        },
+        "prereqLocation": {
+          "rowIdx": 4,
+          "colIdx": 1
+        },
+        "spellIds": [
+          30919,
+          30920
+        ],
+        "maxPoints": 2,
+        "name": "Weapon Expertise",
+        "icon": "spell_holy_blessingofstrength",
+        "description": "Reduces the chance for your attacks to be Dodged or Parried by {0}%.",
+        "ranks": [
+          [
+            1
+          ],
+          [
+            2
+          ]
+        ]
+      },
+      {
+        "fieldName": "aggression",
+        "location": {
+          "rowIdx": 5,
+          "colIdx": 2
+        },
+        "spellIds": [
+          18427,
+          18428,
+          18429
+        ],
+        "maxPoints": 3,
+        "name": "Aggression",
+        "icon": "ability_racial_avatar",
+        "description": "Increases the damage of your Sinister Strike, Backstab, and Eviscerate abilities by {0}%.",
+        "ranks": [
+          [
+            2
+          ],
+          [
+            4
+          ],
+          [
+            6
+          ]
+        ]
+      },
+      {
+        "fieldName": "adrenalineRush",
+        "location": {
+          "rowIdx": 6,
+          "colIdx": 1
+        },
+        "spellIds": [
+          13750
+        ],
+        "maxPoints": 1,
+        "name": "Adrenaline Rush",
+        "icon": "spell_shadow_shadowworddominate",
+        "description": "Increases your Energy regeneration rate by {0}% for {1} sec.",
+        "ranks": [
+          [
+            100,
+            15
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Subtlety",
+    "backgroundUrl": "https://wow.zamimg.com/images/wow/talents/backgrounds/classic/183.jpg",
+    "talents": [
+      {
+        "fieldName": "camouflage",
+        "location": {
+          "rowIdx": 0,
+          "colIdx": 0
+        },
+        "spellIds": [
+          13975,
+          14062,
+          14063,
+          14064,
+          14065
+        ],
+        "maxPoints": 5,
+        "name": "Camouflage",
+        "icon": "ability_stealth",
+        "description": "Reduces your speed penalty from your Stealth ability by {0}% and reduces its cooldown by {1} sec.",
+        "ranks": [
+          [
+            3,
+            2
+          ],
+          [
+            6,
+            3
+          ],
+          [
+            9,
+            4
+          ],
+          [
+            12,
+            5
+          ],
+          [
+            15,
+            6
+          ]
+        ],
+        "notSimulated": true
+      },
+      {
+        "fieldName": "masterOfDeception",
+        "location": {
+          "rowIdx": 0,
+          "colIdx": 1
+        },
+        "spellIds": [
+          13958,
+          13970,
+          13971
+        ],
+        "maxPoints": 3,
+        "name": "Master of Deception",
+        "icon": "spell_shadow_charm",
+        "description": "Reduces the chance enemies have to detect you while in Stealth mode as if you were {0} level{1} higher.",
+        "ranks": [
+          [
+            1,
+            ""
+          ],
+          [
+            2,
+            "s"
+          ],
+          [
+            3,
+            "s"
+          ]
+        ],
+        "notSimulated": true
+      },
+      {
+        "fieldName": "opportunity",
+        "location": {
+          "rowIdx": 0,
+          "colIdx": 2
+        },
+        "spellIds": [
+          14057,
+          14072
+        ],
+        "maxPoints": 2,
+        "name": "Opportunity",
+        "icon": "ability_warrior_warcry",
+        "description": "Increases the damage dealt by your Backstab, Garrote, Ambush, and Mutilate abilities by {0}%.",
+        "ranks": [
+          [
+            5
+          ],
+          [
+            10
+          ]
+        ]
+      },
+      {
+        "fieldName": "setup",
+        "location": {
+          "rowIdx": 1,
+          "colIdx": 0
+        },
+        "spellIds": [
+          13983,
+          14070,
+          14071
+        ],
+        "maxPoints": 3,
+        "name": "Setup",
+        "icon": "spell_nature_mirrorimage",
+        "description": "Gives you a {0}% chance to add a Combo Point to your target after Dodging an attack or fully resisting a spell.",
+        "ranks": [
+          [
+            33
+          ],
+          [
+            67
+          ],
+          [
+            100
+          ]
+        ],
+        "notSimulated": true
+      },
+      {
+        "fieldName": "elusiveness",
+        "location": {
+          "rowIdx": 1,
+          "colIdx": 1
+        },
+        "spellIds": [
+          13981,
+          14066
+        ],
+        "maxPoints": 2,
+        "name": "Elusiveness",
+        "icon": "spell_magic_lesserinvisibilty",
+        "description": "Reduces the cooldown of your Vanish and Blind abilities by {0} sec.",
+        "ranks": [
+          [
+            45
+          ],
+          [
+            90
+          ]
+        ]
+      },
+      {
+        "fieldName": "dirtyTricks",
+        "location": {
+          "rowIdx": 1,
+          "colIdx": 2
+        },
+        "spellIds": [
+          0,
+          0
+        ],
+        "maxPoints": 2,
+        "name": "Dirty Tricks",
+        "icon": "ability_sap",
+        "description": "Reduces the Energy cost of your Sap and Blind abilities by {0}%.",
+        "ranks": [
+          [
+            25
+          ],
+          [
+            50
+          ]
+        ],
+        "notSimulated": true
+      },
+      {
+        "fieldName": "improvedAmbush",
+        "location": {
+          "rowIdx": 1,
+          "colIdx": 3
+        },
+        "spellIds": [
+          14079,
+          14080,
+          14081
+        ],
+        "maxPoints": 3,
+        "name": "Improved Ambush",
+        "icon": "ability_rogue_ambush",
+        "description": "Increases the critical strike chance of your Ambush ability by {0}%.",
+        "ranks": [
+          [
+            15
+          ],
+          [
+            30
+          ],
+          [
+            45
+          ]
+        ]
+      },
+      {
+        "fieldName": "initiative",
+        "location": {
+          "rowIdx": 2,
+          "colIdx": 0
+        },
+        "spellIds": [
+          13976,
+          13979,
+          13980
+        ],
+        "maxPoints": 3,
+        "name": "Initiative",
+        "icon": "spell_shadow_fumble",
+        "description": "Gives you a {0}% chance to add an additional combo point to your target when using your Ambush, Garrote, or Cheap Shot ability.",
+        "ranks": [
+          [
+            33
+          ],
+          [
+            67
+          ],
+          [
+            100
+          ]
+        ]
+      },
+      {
+        "fieldName": "ghostlyStrike",
+        "location": {
+          "rowIdx": 2,
+          "colIdx": 1
+        },
+        "spellIds": [
+          14278
+        ],
+        "maxPoints": 1,
+        "name": "Ghostly Strike",
+        "icon": "spell_shadow_curse",
+        "description": "A strike that deals {0}% ({1}% if a Dagger is equipped in your Main Hand) weapon damage and increases your chance to dodge by {2}% for {3} sec. Awards {4} combo point.",
+        "ranks": [
+          [
+            125,
+            180,
+            15,
+            7,
+            1
+          ]
+        ]
+      },
+      {
+        "fieldName": "improvedDistract",
+        "location": {
+          "rowIdx": 2,
+          "colIdx": 2
+        },
+        "spellIds": [
+          0,
+          0
+        ],
+        "maxPoints": 2,
+        "name": "Improved Distract",
+        "icon": "ability_rogue_distract",
+        "description": "Increases the radius of your Distract ability by {0} yds, and further reduces the Stealth detection of distracted enemies as though they were an additional {1} level{2} lower.",
+        "ranks": [
+          [
+            3,
+            1,
+            ""
+          ],
+          [
+            6,
+            2,
+            "s"
+          ]
+        ],
+        "notSimulated": true
+      },
+      {
+        "fieldName": "heightenedSenses",
+        "location": {
+          "rowIdx": 3,
+          "colIdx": 0
+        },
+        "spellIds": [
+          30894,
+          30895
+        ],
+        "maxPoints": 2,
+        "name": "Heightened Senses",
+        "icon": "ability_ambush",
+        "description": "Increases your Stealth detection as if you were {0} level{1} higher and reduces your chance to be hit by spells and ranged attacks by {2}%.",
+        "ranks": [
+          [
+            1,
+            "",
+            2
+          ],
+          [
+            3,
+            "s",
+            4
+          ]
+        ],
+        "notSimulated": true
+      },
+      {
+        "fieldName": "premeditation",
+        "location": {
+          "rowIdx": 3,
+          "colIdx": 1
+        },
+        "spellIds": [
+          14183
+        ],
+        "maxPoints": 1,
+        "name": "Premeditation",
+        "icon": "spell_shadow_possession",
+        "description": "Adds {0} Combo Points to your target. You must add to or use those combo points within {1} sec or the combo points are lost.",
+        "ranks": [
+          [
+            2,
+            20
+          ]
+        ]
+      },
+      {
+        "fieldName": "serratedBlades",
+        "location": {
+          "rowIdx": 3,
+          "colIdx": 2
+        },
+        "spellIds": [
+          14171,
+          14172,
+          14173
+        ],
+        "maxPoints": 3,
+        "name": "Serrated Blades",
+        "icon": "inv_sword_17",
+        "description": "Causes your attacks to ignore {0}% of your target's Armor and increases the damage dealt by your Rupture ability by {1}%.",
+        "ranks": [
+          [
+            3,
+            10
+          ],
+          [
+            6,
+            20
+          ],
+          [
+            9,
+            30
+          ]
+        ]
+      },
+      {
+        "fieldName": "dirtyDeeds",
+        "location": {
+          "rowIdx": 4,
+          "colIdx": 0
+        },
+        "spellIds": [
+          14082,
+          14083
+        ],
+        "maxPoints": 2,
+        "name": "Dirty Deeds",
+        "icon": "spell_shadow_summonsuccubus",
+        "description": "Reduces the Energy cost of your Cheap Shot and Garrote abilities by {0}, and your Garrote ability no longer requires you to be behind your target.",
+        "ranks": [
+          [
+            10
+          ],
+          [
+            20
+          ]
+        ]
+      },
+      {
+        "fieldName": "preparation",
+        "location": {
+          "rowIdx": 4,
+          "colIdx": 1
+        },
+        "spellIds": [
+          14185
+        ],
+        "maxPoints": 1,
+        "name": "Preparation",
+        "icon": "spell_shadow_antishadow",
+        "description": "When activated, this ability immediately finishes the cooldown on your other Rogue abilities.",
+        "ranks": [
+          []
+        ]
+      },
+      {
+        "fieldName": "hemorrhage",
+        "location": {
+          "rowIdx": 4,
+          "colIdx": 2
+        },
+        "prereqLocation": {
+          "rowIdx": 3,
+          "colIdx": 2
+        },
+        "spellIds": [
+          16511
+        ],
+        "maxPoints": 1,
+        "name": "Hemorrhage",
+        "icon": "spell_shadow_lifedrain",
+        "description": "An instant strike that deals {0}% weapon damage ({1}% if a Dagger is equipped) and causes the target to take {2}% increased Rupture damage from the Rogue. Lasts {3} sec. Awards {4} Combo Point.",
+        "ranks": [
+          [
+            100,
+            145,
+            15,
+            15,
+            1
+          ]
+        ]
+      },
+      {
+        "fieldName": "quietus",
+        "location": {
+          "rowIdx": 5,
+          "colIdx": 0
+        },
+        "prereqLocation": {
+          "rowIdx": 4,
+          "colIdx": 0
+        },
+        "spellIds": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "maxPoints": 5,
+        "name": "Quietus",
+        "icon": "ability_rogue_garrote",
+        "description": "Your Sinister Strike, Ghostly Strike, and Hemorrhage abilities cause {0}% more damage against targets below {1}% health.",
+        "ranks": [
+          [
+            2,
+            35
+          ],
+          [
+            4,
+            35
+          ],
+          [
+            6,
+            35
+          ],
+          [
+            8,
+            35
+          ],
+          [
+            10,
+            35
+          ]
+        ]
+      },
+      {
+        "fieldName": "cutthroat",
+        "location": {
+          "rowIdx": 5,
+          "colIdx": 2
+        },
+        "spellIds": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "maxPoints": 5,
+        "name": "Cutthroat",
+        "icon": "classicon_rogue",
+        "description": "Your Backstab has a {0}% chance to cause your next Ambush within {1} sec to not require Stealth.",
+        "ranks": [
+          [
+            3,
+            10
+          ],
+          [
+            6,
+            10
+          ],
+          [
+            9,
+            10
+          ],
+          [
+            12,
+            10
+          ],
+          [
+            15,
+            10
+          ]
+        ]
+      },
+      {
+        "fieldName": "thousandCuts",
+        "location": {
+          "rowIdx": 6,
+          "colIdx": 1
+        },
+        "prereqLocation": {
+          "rowIdx": 4,
+          "colIdx": 1
+        },
+        "spellIds": [
+          0
+        ],
+        "maxPoints": 1,
+        "name": "Thousand Cuts",
+        "icon": "ability_rogue_rupture",
+        "description": "When your Rupture ability deals periodic damage, the Energy cost of your next Hemorrhage or Backstab ability within {0} sec is reduced by {1}, stacking up to {2} times.",
+        "ranks": [
+          [
+            10,
+            3,
+            5
+          ]
+        ]
+      }
+    ]
+  }
+]
