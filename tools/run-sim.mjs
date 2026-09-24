@@ -11,7 +11,7 @@ const out = resolve(process.cwd(), "lib", "data", "sim-results.json");
 
 if (!existsSync(join(wowsims, "go.mod"))) {
   console.error(
-    `Missing ElliotWood/Forever clone at ${wowsims}. Clone https://github.com/ElliotWood/Forever there first.`,
+    `Missing patched Forever clone at ${wowsims}. Clone https://github.com/nikftw/Forever there first.`,
   );
   process.exit(1);
 }

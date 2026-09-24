@@ -11,7 +11,7 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 # Forever Race Rankings
 
 ## Purpose
-Local guild tool that ranks WoW Forever races per class/spec on Horde and Alliance at level 60. Combat is [ElliotWood/Forever](https://github.com/ElliotWood/Forever) (MIT) after our racial patches. Racial numbers come from `lib/data/racial-audit.ts`, not wowsims/forever Classic leftovers.
+Local guild tool that ranks WoW Forever races per class/spec on Horde and Alliance at level 60. Combat is [nikftw/Forever](https://github.com/nikftw/Forever) (MIT fork of ElliotWood/Forever) after our racial patches. Racial numbers come from `lib/data/racial-audit.ts`, not wowsims/forever Classic leftovers.
 
 ## Run
 ```
@@ -22,7 +22,7 @@ npm run lint
 
 Open http://localhost:3000 for rankings and /audit for the racial truth table.
 
-Re-sim (Go + sibling clone at `../wowsims-forever`):
+Re-sim (Go + sibling clone at `../wowsims-forever`, from https://github.com/nikftw/Forever):
 ```
 npm run sim
 ```

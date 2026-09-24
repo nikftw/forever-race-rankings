@@ -4,7 +4,7 @@ Guild tool for **World of Warcraft: Forever**. Rank the best race for each class
 
 Live site: [https://nikftw.github.io/forever-race-rankings/](https://nikftw.github.io/forever-race-rankings/)
 
-Combat is [ElliotWood/Forever](https://github.com/ElliotWood/Forever) (**MIT**), patched to the locked racial audit. `/audit` is the racial table.
+Combat is [nikftw/Forever](https://github.com/nikftw/Forever) (**MIT**), a fork of [ElliotWood/Forever](https://github.com/ElliotWood/Forever) with locked racials and `tools/rank_races`. `/audit` is the racial table.
 
 ## Run locally
 
@@ -24,7 +24,11 @@ npm run lint
 
 Each combo uses the **Iters** control (default 1000) on a 180s Patchwerk fight (default Demon dummy). The **Dummy** control re-sims against Beast, Elemental, and the other creature types so Beast Slaying / BGH / Elemental Insight can score. **Refresh all sims** (local `next dev` / `next start` only) runs every combo again with a **new seed** and streams combo-by-combo progress. GitHub Pages is a static snapshot of the last committed JSON.
 
-Needs [Go](https://go.dev/dl/) and a clone of ElliotWood/Forever at `../wowsims-forever`.
+Needs [Go](https://go.dev/dl/) and a clone of the patched Forever engine beside this repo:
+
+```bash
+git clone https://github.com/nikftw/Forever.git ../wowsims-forever
+```
 
 ```bash
 npm run sim
