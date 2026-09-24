@@ -711,7 +711,9 @@ export function RaceBoard() {
         label: `Simulating ${body.spec}... (WASM)`,
       });
 
-      const worker = new Worker('worker.js');
+      const worker = new Worker(
+        `${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/worker.js?v=3`,
+      );
       
       worker.onmessage = (e) => {
         const event = e.data;

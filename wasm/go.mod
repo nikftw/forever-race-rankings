@@ -1,6 +1,8 @@
 module race-rankings-wasm
 
-go 1.27.0
+go 1.23.0
+
+toolchain go1.23.4
 
 replace github.com/wowsims/classic => ../../wowsims-forever
 

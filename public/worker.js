@@ -1,53 +1,82 @@
-importScripts('wasm_exec.js');
+importScripts("wasm_exec.js?v=3");
 
 const go = new Go();
 
-let wasmReady = false;
-WebAssembly.instantiateStreaming(fetch('sim.wasm'), go.importObject).then((result) => {
-    go.run(result.instance);
-    wasmReady = true;
-    postMessage({ type: 'ready' });
-}).catch((err) => {
-    console.error('Failed to load WASM:', err);
-    postMessage({ type: 'error', error: err.message });
-});
+self.wasmready = function () {
+  postMessage({ type: "ready" });
+};
 
-self.onmessage = function(e) {
-    if (!wasmReady) {
-        postMessage({ type: 'error', error: 'WASM not ready yet' });
-        return;
-    }
-    
-    const { specId, talents, iters, seed, mobType } = e.data;
-    
-    try {
-        const resultsJson = self.resimSpecWasm(
-            specId || "", 
-            talents || "", 
-            iters || 1000, 
-            seed || 0, 
-            mobType || ""
-        );
-        
-        const results = JSON.parse(resultsJson);
-        
-        // Return in the format expected by race-board.tsx replaceSimResults
-        postMessage({
-            type: 'done',
-            results: {
-                engine: "WASM",
-                engineUrl: "",
-                license: "MIT",
-                fightDurationSec: 180,
-                iterations: iters,
-                seed: seed,
-                mobType: mobType || "Demon",
-                generatedAt: new Date().toISOString(),
-                rows: results
-            }
-        });
-    } catch (err) {
-        console.error('WASM run failed:', err);
-        postMessage({ type: 'error', error: err.message });
-    }
+WebAssembly.instantiateStreaming(fetch("sim.wasm?v=3"), go.importObject)
+  .then((result) => go.run(result.instance))
+  .catch((err) => {
+    console.error("Failed to load WASM:", err);
+    postMessage({ type: "error", error: err.message || String(err) });
+  });
+
+function postSimError(err) {
+  postMessage({
+    type: "error",
+    error: err && err.message ? err.message : String(err),
+  });
+}
+
+function postSimDone(results, iters, seed, mobType) {
+  postMessage({
+    type: "done",
+    results: {
+      engine: "WASM",
+      engineUrl: "",
+      license: "MIT",
+      fightDurationSec: 180,
+      iterations: iters,
+      seed: seed,
+      mobType: mobType || "Demon",
+      generatedAt: new Date().toISOString(),
+      rows: results,
+    },
+  });
+}
+
+self.onmessage = function (e) {
+  const { specId, talents, iters, seed, mobType } = e.data || {};
+
+  if (typeof self.resimSpecWasm !== "function") {
+    postMessage({ type: "error", error: "WASM sim is not registered." });
+    return;
+  }
+
+  try {
+    self.resimSpecWasm(
+      specId || "",
+      talents || "",
+      iters || 1000,
+      seed || 0,
+      mobType || "",
+      function (resultsJson) {
+        if (typeof resultsJson !== "string" || resultsJson.length === 0) {
+          postMessage({
+            type: "error",
+            error: "WASM returned " + String(resultsJson),
+          });
+          return;
+        }
+        try {
+          const parsed = JSON.parse(resultsJson);
+          if (parsed && typeof parsed === "object" && !Array.isArray(parsed) && parsed.error) {
+            postMessage({ type: "error", error: parsed.error });
+            return;
+          }
+          if (!Array.isArray(parsed)) {
+            postMessage({ type: "error", error: "WASM returned unexpected JSON." });
+            return;
+          }
+          postSimDone(parsed, iters, seed, mobType);
+        } catch (err) {
+          postSimError(err);
+        }
+      },
+    );
+  } catch (err) {
+    postSimError(err);
+  }
 };

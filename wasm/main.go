@@ -78,8 +78,12 @@ var races = map[string]proto.Race{
 }
 
 
+func embedDir(dir string) string {
+	return strings.TrimPrefix(dir, "ui/")
+}
+
 func getAplRotation(dir string, file string) core.RotationCombo {
-	filePath := "data/" + dir + "/" + file + ".apl.json"
+	filePath := "data/" + embedDir(dir) + "/" + file + ".apl.json"
 	data, err := embeddedData.ReadFile(filePath)
 	if err != nil {
 		fmt.Printf("failed to load apl json file: %s, %s\n", filePath, err)
@@ -103,24 +107,35 @@ func loadJobGear(job specJob) core.GearSetCombo {
 			GearSet: core.EquipmentSpecFromJsonString(string(data)),
 		}
 	}
-	filePath := "data/" + job.gearDir + "/" + job.gearFile + ".gear.json"
+	filePath := "data/" + embedDir(job.gearDir) + "/" + job.gearFile + ".gear.json"
 	data, err := embeddedData.ReadFile(filePath)
-	if err != nil {
+	if err != nil || len(data) == 0 {
 		fmt.Printf("failed to load gear json file: %s, %s\n", filePath, err)
+		return core.GearSetCombo{Label: job.gearFile, GearSet: &proto.EquipmentSpec{}}
 	}
 	return core.GearSetCombo{Label: job.gearFile, GearSet: core.EquipmentSpecFromJsonString(string(data))}
 }
 
-func resimSpec(this js.Value, args []js.Value) interface{} {
-	specId := args[0].String()
-	talents := args[1].String()
-	iters := args[2].Int()
-	seed := args[3].Int()
-	mobTypeStr := args[4].String()
-	
+func jsonError(message string) string {
+	raw, err := json.Marshal(map[string]string{"error": message})
+	if err != nil {
+		return `{"error":"wasm sim failed"}`
+	}
+	return string(raw)
+}
+
+func runResimSpec(specId string, talents string, iters int, seed int, mobTypeStr string) (jsonStr string) {
+	defer func() {
+		if recovered := recover(); recovered != nil {
+			jsonStr = jsonError(fmt.Sprintf("panic: %v", recovered))
+		}
+	}()
+
 	if seed == 0 {
 		seed = int(time.Now().UnixNano() & 0x7fffffff)
-		if seed == 0 { seed = 1 }
+		if seed == 0 {
+			seed = 1
+		}
 	}
 
 	mobEnum, _ := parseMobType(mobTypeStr)
@@ -139,13 +154,13 @@ func resimSpec(this js.Value, args []js.Value) interface{} {
 	}
 
 	if targetJob == nil {
-		return js.ValueOf("[]")
+		return "[]"
 	}
 
 	rotation := getAplRotation(targetJob.aplDir, targetJob.aplFile)
 	gear := loadJobGear(*targetJob)
 	buffs := core.ForeverBuffs
-	
+
 	results := []resultRow{}
 	for _, raceID := range targetJob.races {
 		race := races[raceID]
@@ -162,15 +177,48 @@ func resimSpec(this js.Value, args []js.Value) interface{} {
 
 	outBytes, err := json.Marshal(results)
 	if err != nil {
-		return js.ValueOf("[]")
+		return jsonError(err.Error())
 	}
-	return js.ValueOf(string(outBytes))
+	return string(outBytes)
+}
+
+func resimSpec(_ js.Value, args []js.Value) interface{} {
+	if len(args) < 5 {
+		return nil
+	}
+	specId := args[0].String()
+	talents := args[1].String()
+	iters := args[2].Int()
+	seed := args[3].Int()
+	mobTypeStr := args[4].String()
+	callback := js.Undefined()
+	if len(args) > 5 {
+		callback = args[5]
+	}
+
+	go func() {
+		jsonStr := runResimSpec(specId, talents, iters, seed, mobTypeStr)
+		if callback.Truthy() {
+			callback.Invoke(jsonStr)
+		}
+	}()
+	return nil
+}
+
+var resimFunc js.Func
+
+func init() {
+	core.SetRunningInWasm()
 }
 
 func main() {
-	c := make(chan struct{}, 0)
-	js.Global().Set("resimSpecWasm", js.FuncOf(resimSpec))
+	c := make(chan struct{})
 	sim.RegisterAll()
+	resimFunc = js.FuncOf(resimSpec)
+	js.Global().Set("resimSpecWasm", resimFunc)
+	if ready := js.Global().Get("wasmready"); ready.Type() == js.TypeFunction {
+		ready.Invoke()
+	}
 	<-c
 }
 
@@ -244,7 +292,7 @@ func parseMobType(raw string) (proto.MobType, string) {
 	case "undead":
 		return proto.MobType_MobTypeUndead, "Undead"
 	default:
-		panic("unknown mob type " + raw)
+		return proto.MobType_MobTypeDemon, "Demon"
 	}
 }
 

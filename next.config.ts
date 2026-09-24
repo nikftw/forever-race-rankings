@@ -14,6 +14,7 @@ const nextConfig: NextConfig = {
     : {}),
   env: {
     NEXT_PUBLIC_CAN_RESIM: isPages ? "0" : "1",
+    NEXT_PUBLIC_BASE_PATH: isPages ? `/${repoName}` : "",
     NEXT_PUBLIC_GITHUB_REPO: "https://github.com/nikftw/forever-race-rankings",
   },
 };
